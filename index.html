@@ -543,7 +543,7 @@
         updateCartCount();
         const newArrivalsGrid = document.getElementById("new-arrivals-grid");
 
-        fetch("https://frolicking-valkyrie-230c87.netlify.app/api/products")
+        fetch("http://localhost:3001/api/products")
           .then((response) => response.json())
           .then((products) => {
             if (newArrivalsGrid) {
