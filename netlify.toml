@@ -1,0 +1,16 @@
+# This file tells Netlify how to build and deploy your site.
+
+[build]
+  # The directory containing your static frontend files
+  publish = ""
+  
+  # The directory where Netlify can find your serverless functions
+  functions = "netlify/functions"
+
+# This is the magic part: a "rewrite rule"
+# It tells Netlify: "If you get a request for a URL starting with /api/,
+# instead of looking for a file, run the 'api' serverless function."
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200 # A 200 status makes it a rewrite, not a redirect
