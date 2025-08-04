@@ -1,11 +1,32 @@
 // server.js
 require("dotenv").config({ path: __dirname + "/.env" });
+const cors = require("cors");
 const express = require("express");
 const cors = require("cors");
 const pool = require("./db");
 const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const adminMiddleware = require("./middleware/adminMiddleware");
 const adminRoutes = require("./routes/admin");
+
+const allowedOrigins = [
+  "https://frolicking-valkyrie-230c87.netlify.app", // <-- Your live Netlify URL
+];
+
+// Add your local dev server if you use one
+if (process.env.NODE_ENV !== "production") {
+  // e.g., for VS Code Live Server
+  allowedOrigins.push("http://127.0.0.1:5500");
+}
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 
 // --- Import Routes ---
 const productRoutes = require("./routes/products");
@@ -19,6 +40,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 
 // --- Middleware ---
+app.use(cors(corsOptions));
 app.use(cors());
 app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
@@ -26,6 +48,7 @@ app.use("/api/admin", adminMiddleware, adminRoutes);
 app.use("/assets", express.static(path.join(__dirname, "..", "assets")));
 
 // --- API Routes ---
+
 const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
 app.use("/api/products", productRoutes);
