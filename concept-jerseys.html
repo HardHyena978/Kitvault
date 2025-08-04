@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Concept Jerseys - KitVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              primary: "#2563eb",
+            },
+            textShadow: {
+              DEFAULT: "1px 1px 3px rgb(0 0 0 / 0.4)",
+              sm: "1px 1px 2px rgb(0 0 0 / 0.3)",
+              md: "2px 2px 5px rgb(0 0 0 / 0.4)",
+            },
+          },
+        },
+        plugins: [
+          function ({ addUtilities, theme, e }) {
+            const utilities = Object.entries(theme("textShadow")).map(
+              ([key, value]) => {
+                return {
+                  [`.${e(`text-shadow${key === "DEFAULT" ? "" : `-${key}`}`)}`]:
+                    {
+                      textShadow: value,
+                    },
+                };
+              }
+            );
+            addUtilities(utilities);
+          },
+        ],
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.98);
+          filter: blur(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          filter: blur(0);
+        }
+      }
+      .animate-fadeInUp {
+        animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+      }
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+      .animate-bounce-slow {
+        animation: bounce 2s infinite;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white text-slate-700 overflow-hidden">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 top-4 left-4 px-4 py-2 bg-white shadow-lg rounded-lg"
+    >
+      Skip to main content
+    </a>
+
+    <div
+      id="loading-spinner"
+      class="fixed inset-0 flex items-center justify-center bg-white z-50 transition-opacity duration-500"
+    >
+      <div
+        class="animate-spin rounded-full h-24 w-24 border-t-2 border-b-2 border-slate-900"
+      ></div>
+    </div>
+
+    <!-- Consistent Header -->
+    <header
+      id="main-header"
+      class="bg-white/90 backdrop-blur-sm fixed top-0 left-0 right-0 z-40 transition-colors duration-300"
+    >
+      <nav
+        class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-slate-900">
+          <img
+            class="object-contain h-9"
+            src="assets/logo_horizontal.png"
+            alt="KITVAULT"
+          />
+        </a>
+        <div class="hidden md:flex space-x-6 items-center">
+          <a
+            href="all-items.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >All Kits</a
+          >
+          <a
+            href="retro-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Retro</a
+          >
+          <a
+            href="current-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Current</a
+          >
+          <a
+            href="concept-jerseys.html"
+            class="text-primary font-semibold transition-colors duration-200"
+            >Concepts</a
+          >
+          <a
+            href="orders.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Orders</a
+          >
+          <a
+            href="cart.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium relative"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              />
+            </svg>
+            <span
+              id="cart-count"
+              class="absolute -top-1 -right-2 bg-primary text-white text-[10px] font-semibold rounded-full h-4 w-4 flex items-center justify-center"
+              >0</span
+            >
+          </a>
+          <div id="auth-links" class="flex items-center gap-x-4"></div>
+        </div>
+        <div class="md:hidden flex items-center">
+          <button
+            id="mobile-menu-button"
+            class="text-slate-900 focus:outline-none"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Mobile Menu HTML -->
+    <div
+      id="mobile-menu"
+      class="md:hidden fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 hidden transition-transform duration-300 ease-in-out transform translate-x-full"
+    >
+      <div class="flex justify-end p-6">
+        <button id="close-mobile-menu" class="text-white focus:outline-none">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <nav
+        class="flex flex-col items-center justify-center h-full space-y-8 text-xl text-white -mt-16"
+      >
+        <a
+          href="all-items.html"
+          class="hover:text-primary transition duration-300"
+          >All Kits</a
+        >
+        <a
+          href="retro-kits.html"
+          class="hover:text-primary transition duration-300"
+          >Retro</a
+        >
+        <a
+          href="current-kits.html"
+          class="hover:text-primary transition duration-300"
+          >Current</a
+        >
+        <a href="concept-jerseys.html" class="text-primary font-semibold"
+          >Concepts</a
+        >
+        <a href="orders.html" class="hover:text-primary transition duration-300"
+          >Orders</a
+        >
+        <a
+          href="cart.html"
+          class="hover:text-primary transition duration-300 relative"
+          >Cart
+          <span
+            id="mobile-cart-count"
+            class="absolute -top-2 -right-3 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+            >0</span
+          ></a
+        >
+        <div
+          id="mobile-auth-links"
+          class="flex flex-col items-center space-y-8 pt-4"
+        ></div>
+      </nav>
+    </div>
+
+    <!-- Luxurious Hero Section -->
+    <section
+      class="relative h-screen flex flex-col items-center justify-center text-center text-white bg-cover bg-center"
+      style="background-image: url('assets/conceptbanner.webp')"
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/20 backdrop-blur-sm"
+      ></div>
+      <div class="relative z-10 px-4 flex flex-col items-center">
+        <h1
+          class="text-6xl md:text-8xl font-bold leading-tight mb-4 opacity-0 animate-fadeInUp text-shadow-md"
+          style="animation-delay: 200ms"
+        >
+          The Future of the Game
+        </h1>
+        <p
+          class="text-lg md:text-xl text-slate-100 mb-10 max-w-2xl mx-auto opacity-0 animate-fadeInUp text-shadow"
+          style="animation-delay: 600ms"
+        >
+          Where creativity meets the pitch. Explore unique concept jerseys
+          designed by fans and visionaries.
+        </p>
+        <a
+          href="#main-content"
+          class="border-2 border-white text-white font-semibold px-10 py-3 rounded-lg text-lg transition-all duration-300 hover:bg-white/10 backdrop-blur-sm opacity-0 animate-fadeInUp"
+          style="animation-delay: 1000ms"
+        >
+          Explore Concepts
+        </a>
+      </div>
+      <div
+        class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 opacity-0 animate-fadeInUp"
+        style="animation-delay: 1500ms"
+      >
+        <a href="#main-content" class="animate-bounce-slow">
+          <svg
+            class="w-6 h-6 text-white"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <main id="main-content" class="bg-white">
+      <section class="py-20 md:py-28">
+        <div class="container mx-auto px-6">
+          <div
+            class="text-sm text-slate-500 mb-8"
+            id="breadcrumbs"
+            data-aos="fade-up"
+          ></div>
+
+          <h1
+            class="text-4xl font-bold text-center mb-10 text-slate-900"
+            data-aos="fade-up"
+          >
+            Concept Jerseys
+          </h1>
+
+          <div
+            class="flex justify-center mb-12"
+            data-aos="fade-up"
+            data-aos-delay="100"
+          >
+            <div class="relative w-full md:w-1/2 lg:w-1/3">
+              <input
+                type="text"
+                id="search-bar"
+                placeholder="Search for concept jerseys..."
+                class="w-full pl-10 pr-4 py-2.5 border border-slate-200 bg-slate-100 rounded-full focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary transition"
+              />
+              <svg
+                class="absolute left-3.5 top-1/2 transform -translate-y-1/2 w-5 h-5 text-slate-400"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                ></path>
+              </svg>
+            </div>
+          </div>
+
+          <div
+            id="product-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          ></div>
+
+          <div
+            id="pagination-container"
+            class="mt-16 flex justify-center items-center space-x-2"
+          ></div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Consistent Footer -->
+    <footer id="contact" class="bg-slate-50">
+      <div class="container mx-auto px-6 py-12">
+        <div class="text-center">
+          <a href="#" class="flex justify-center">
+            <img src="assets/logo_horizontal.png" alt="KITVAULT" class="h-10" />
+          </a>
+          <div class="flex justify-center space-x-6 mt-6">
+            <a
+              href="contact.html"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Contact</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Facebook</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Instagram</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Twitter/X</a
+            >
+          </div>
+          <p class="mt-8 text-slate-500 text-sm">
+            © 2025 KitVault. All Rights Reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- CONSOLIDATED JAVASCRIPT BLOCK -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- 1. ELEMENT SELECTORS ---
+        const body = document.body;
+        const loadingSpinner = document.getElementById("loading-spinner");
+        const header = document.getElementById("main-header");
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const closeMobileMenuButton =
+          document.getElementById("close-mobile-menu");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const productGrid = document.getElementById("product-grid");
+        const searchBar = document.getElementById("search-bar");
+        const paginationContainer = document.getElementById(
+          "pagination-container"
+        );
+        const breadcrumbs = document.getElementById("breadcrumbs");
+
+        // --- 2. STATE VARIABLES ---
+        let allProducts = [];
+        const productsPerPage = 12;
+        let currentPage = 1;
+        let currentSearchTerm = "";
+
+        // --- 3. CORE & UI FUNCTIONS ---
+
+        const handleHeaderScroll = () => {
+          if (!header) return;
+          window.addEventListener("scroll", () => {
+            header.classList.toggle("bg-white", window.scrollY > 50);
+            header.classList.toggle("bg-white/90", window.scrollY <= 50);
+          });
+        };
+
+        const initMobileMenu = () => {
+          if (!mobileMenuButton || !closeMobileMenuButton || !mobileMenu)
+            return;
+          mobileMenuButton.addEventListener("click", () => {
+            mobileMenu.classList.remove("hidden");
+            requestAnimationFrame(() => {
+              mobileMenu.classList.remove("translate-x-full");
+            });
+          });
+          closeMobileMenuButton.addEventListener("click", () => {
+            mobileMenu.classList.add("translate-x-full");
+            setTimeout(() => mobileMenu.classList.add("hidden"), 300);
+          });
+        };
+
+        const updateCartCount = () => {
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+          const cartCountSpan = document.getElementById("cart-count");
+          const mobileCartCountSpan =
+            document.getElementById("mobile-cart-count");
+          if (cartCountSpan) cartCountSpan.textContent = cartCount;
+          if (mobileCartCountSpan) mobileCartCountSpan.textContent = cartCount;
+        };
+
+        const initAuth = () => {
+          const token = localStorage.getItem("token");
+          const authLinksContainer = document.getElementById("auth-links");
+          const mobileAuthLinksContainer =
+            document.getElementById("mobile-auth-links");
+          const logout = (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            window.location.href = "index.html";
+          };
+          if (token) {
+            if (authLinksContainer) {
+              authLinksContainer.innerHTML = `<a href="#" id="logout-button" class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium">Logout</a>`;
+              document
+                .getElementById("logout-button")
+                .addEventListener("click", logout);
+            }
+            if (mobileAuthLinksContainer) {
+              mobileAuthLinksContainer.innerHTML = `<a href="#" id="mobile-logout-button" class="hover:text-primary transition duration-300">Logout</a>`;
+              document
+                .getElementById("mobile-logout-button")
+                .addEventListener("click", logout);
+            }
+          } else {
+            if (authLinksContainer) {
+              authLinksContainer.innerHTML = `
+                <a href="login.html" class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium">Login</a>
+                <a href="register.html" class="bg-slate-800 text-white font-semibold px-4 py-2 rounded-lg hover:bg-slate-900 transition-colors duration-300">Register</a>`;
+            }
+            if (mobileAuthLinksContainer) {
+              mobileAuthLinksContainer.innerHTML = `
+                <a href="login.html" class="hover:text-primary transition duration-300">Login</a>
+                <a href="register.html" class="bg-white text-slate-800 font-semibold px-6 py-2 rounded-lg hover:bg-slate-200 transition-colors duration-300">Register</a>`;
+            }
+          }
+        };
+
+        const initializeProducts = async () => {
+          try {
+            const response = await fetch(
+              "http://localhost:3001/api/products/category/custom"
+            );
+            allProducts = await response.json();
+            renderPage();
+          } catch (error) {
+            productGrid.innerHTML = `<p class="text-center text-red-500 col-span-full">Failed to load concept jerseys.</p>`;
+          }
+        };
+
+        const renderPage = () => {
+          let filteredProducts = allProducts;
+          if (currentSearchTerm) {
+            filteredProducts = allProducts.filter((p) =>
+              p.name.toLowerCase().includes(currentSearchTerm)
+            );
+          }
+          const startIndex = (currentPage - 1) * productsPerPage;
+          const endIndex = startIndex + productsPerPage;
+          const paginatedProducts = filteredProducts.slice(
+            startIndex,
+            endIndex
+          );
+          renderProductGrid(paginatedProducts);
+          renderPagination(filteredProducts.length);
+          updateBreadcrumbs();
+        };
+
+        const renderProductGrid = (products) => {
+          productGrid.innerHTML = "";
+          if (products.length === 0) {
+            productGrid.innerHTML = `<p class="text-center text-slate-600 col-span-full">No results found.</p>`;
+            return;
+          }
+          products.forEach((product, index) => {
+            const productCardHTML = `
+              <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-all duration-300 hover:shadow-xl" 
+                   data-aos="fade-up" 
+                   data-aos-delay="${index * 50}">
+                  <a href="product.html?id=${
+                    product.id
+                  }" class="block h-72 overflow-hidden">
+                      <img src="${product.image_url}" alt="${
+              product.name
+            }" class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-105" loading="lazy">
+                  </a>
+                  <div class="p-6">
+                      <h3 class="text-lg font-semibold mb-1 text-slate-900 truncate" title="${
+                        product.name
+                      }">
+                          <a href="product.html?id=${
+                            product.id
+                          }" class="hover:text-primary transition-colors">${
+              product.name
+            }</a>
+                      </h3>
+                      <p class="text-base font-bold text-slate-800 mb-4">$${(
+                        product.price_in_cents / 100
+                      ).toFixed(2)}</p>
+                      <a href="product.html?id=${
+                        product.id
+                      }" class="w-full text-center block bg-slate-800 text-white font-semibold py-2.5 rounded-lg hover:bg-slate-900 transition-colors duration-300">View Product</a>
+                  </div>
+              </div>`;
+            productGrid.innerHTML += productCardHTML;
+          });
+        };
+
+        const renderPagination = (totalProducts) => {
+          const totalPages = Math.ceil(totalProducts / productsPerPage);
+          paginationContainer.innerHTML = "";
+          if (totalPages <= 1) return;
+          const createPageButton = (text, page, isDisabled = false) => {
+            const button = document.createElement("button");
+            button.innerHTML = text;
+            button.className = `px-4 py-2 rounded-md transition-colors font-semibold text-sm ${
+              isDisabled
+                ? "text-slate-400 cursor-not-allowed"
+                : page === currentPage
+                ? "bg-slate-900 text-white"
+                : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+            }`;
+            if (!isDisabled && page !== currentPage) {
+              button.addEventListener("click", () => {
+                currentPage = page;
+                renderPage();
+                window.scrollTo({ top: 400, behavior: "smooth" });
+              });
+            }
+            return button;
+          };
+          paginationContainer.appendChild(
+            createPageButton("←", currentPage - 1, currentPage === 1)
+          );
+          for (let i = 1; i <= totalPages; i++) {
+            paginationContainer.appendChild(createPageButton(i, i));
+          }
+          paginationContainer.appendChild(
+            createPageButton("→", currentPage + 1, currentPage === totalPages)
+          );
+        };
+
+        const updateBreadcrumbs = () => {
+          breadcrumbs.innerHTML = `<a href="index.html" class="hover:text-primary">Home</a>  /  <span class="font-semibold text-slate-800">Concept Jerseys</span>`;
+        };
+
+        // --- 4. EVENT LISTENERS ---
+
+        searchBar.addEventListener("input", (e) => {
+          currentSearchTerm = e.target.value.toLowerCase();
+          currentPage = 1;
+          renderPage();
+        });
+
+        // --- 5. INITIALIZATION ---
+
+        const init = () => {
+          setTimeout(() => {
+            loadingSpinner.style.opacity = "0";
+            setTimeout(() => {
+              loadingSpinner.style.display = "none";
+              body.classList.remove("overflow-hidden");
+            }, 500);
+          }, 500);
+          AOS.init({ once: true, duration: 800, easing: "ease-in-out" });
+          handleHeaderScroll();
+          initMobileMenu();
+          updateCartCount();
+          initAuth();
+          initializeProducts();
+        };
+
+        init();
+      });
+    </script>
+  </body>
+</html>

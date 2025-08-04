@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Manage Products - KitVault Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            colors: {
+              primary: { DEFAULT: "#3b82f6", hover: "#2563eb" },
+              gray: {
+                900: "#111827",
+                800: "#1f2937",
+                700: "#374151",
+                600: "#4b5563",
+                400: "#9ca3af",
+                200: "#e5e7eb",
+                100: "#f3f4f6",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-900 text-gray-200 antialiased">
+    <div class="min-h-screen flex">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-gray-800 flex flex-col">
+        <div class="p-6 flex items-center gap-3">
+          <svg
+            class="h-7 w-7 text-primary"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.956 11.956 0 0 1 12 3c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.604.328-3.136.92-4.562"
+            />
+          </svg>
+          <h1 class="text-xl font-semibold text-gray-100">KitVault</h1>
+        </div>
+        <nav class="flex-1 px-4 space-y-2">
+          <a
+            href="dashboard.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>Dashboard</span></a
+          >
+          <a
+            href="products.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-100 bg-primary/10 border border-primary/30 font-medium"
+            ><span>Manage Products</span></a
+          >
+          <a
+            href="orders.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>View Orders</span></a
+          >
+          <a
+            href="users.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>Manage Users</span></a
+          >
+        </nav>
+        <div class="p-4">
+          <button
+            id="logout-button"
+            class="w-full flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+          >
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-10">
+        <div class="max-w-7xl mx-auto">
+          <!-- Header -->
+          <div class="flex justify-between items-center mb-8">
+            <div class="border-l-4 border-primary pl-4">
+              <h2 class="text-3xl font-bold text-gray-100">Manage Products</h2>
+              <p class="text-gray-400 mt-1">
+                Add, edit, or delete products from your store.
+              </p>
+            </div>
+            <button
+              id="add-product-button"
+              class="bg-primary text-white font-semibold py-2 px-4 rounded-lg hover:bg-primary-hover transition-colors flex items-center gap-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+              <span>Add New Product</span>
+            </button>
+          </div>
+
+          <!-- Products Table Container -->
+          <div class="bg-gray-800 rounded-lg border border-gray-700">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-700/50">
+                  <tr>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Product
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Category
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Price
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody
+                  id="products-table-body"
+                  class="divide-y divide-gray-700"
+                >
+                  <!-- JS will populate this -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Add/Edit Product Modal -->
+    <div
+      id="product-modal"
+      class="fixed inset-0 bg-gray-900/80 flex items-center justify-center p-4 z-50 hidden"
+    >
+      <div
+        class="bg-gray-800 rounded-lg w-full max-w-2xl max-h-full overflow-y-auto"
+        id="modal-panel"
+      >
+        <form id="product-form">
+          <!-- Modal Header -->
+          <div
+            class="flex justify-between items-center p-4 border-b border-gray-700"
+          >
+            <h3 id="modal-title" class="text-lg font-semibold text-gray-100">
+              Add New Product
+            </h3>
+            <button
+              type="button"
+              id="modal-close-button"
+              class="text-gray-400 hover:text-gray-200"
+            >
+              <svg
+                class="h-6 w-6"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke-width="1.5"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M6 18L18 6M6 6l12 12"
+                />
+              </svg>
+            </button>
+          </div>
+          <!-- Modal Body -->
+          <div class="p-6 space-y-4">
+            <input type="hidden" id="product-id" />
+            <div>
+              <label for="name" class="block text-sm font-medium text-gray-300"
+                >Product Name</label
+              >
+              <input
+                type="text"
+                id="name"
+                class="w-full mt-1 bg-gray-700/50 rounded-md py-2 px-3 text-gray-200 focus:ring-2 focus:ring-primary focus:outline-none"
+                required
+              />
+            </div>
+            <div>
+              <label
+                for="description"
+                class="block text-sm font-medium text-gray-300"
+                >Description</label
+              >
+              <textarea
+                id="description"
+                rows="3"
+                class="w-full mt-1 bg-gray-700/50 rounded-md py-2 px-3 text-gray-200 focus:ring-2 focus:ring-primary focus:outline-none"
+                required
+              ></textarea>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label
+                  for="price_in_cents"
+                  class="block text-sm font-medium text-gray-300"
+                  >Price (in Cents)</label
+                >
+                <input
+                  type="number"
+                  id="price_in_cents"
+                  class="w-full mt-1 bg-gray-700/50 rounded-md py-2 px-3 text-gray-200 focus:ring-2 focus:ring-primary focus:outline-none"
+                  required
+                />
+              </div>
+              <div>
+                <label
+                  for="image_url"
+                  class="block text-sm font-medium text-gray-300"
+                  >Image URL</label
+                >
+                <input
+                  type="text"
+                  id="image_url"
+                  placeholder="e.g., assets/kit_images/..."
+                  class="w-full mt-1 bg-gray-700/50 rounded-md py-2 px-3 text-gray-200 focus:ring-2 focus:ring-primary focus:outline-none"
+                  required
+                />
+              </div>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label
+                  for="category"
+                  class="block text-sm font-medium text-gray-300"
+                  >Category</label
+                >
+                <select
+                  id="category"
+                  class="w-full mt-1 bg-gray-700/50 rounded-md py-2 px-3 text-gray-200 focus:ring-2 focus:ring-primary focus:outline-none"
+                >
+                  <option>retro</option>
+                  <option>current</option>
+                  <option>custom</option>
+                </select>
+              </div>
+              <div>
+                <label
+                  for="team_type"
+                  class="block text-sm font-medium text-gray-300"
+                  >Team Type</label
+                >
+                <select
+                  id="team_type"
+                  class="w-full mt-1 bg-gray-700/50 rounded-md py-2 px-3 text-gray-200 focus:ring-2 focus:ring-primary focus:outline-none"
+                >
+                  <option>club</option>
+                  <option>nation</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <!-- Modal Footer -->
+          <div
+            class="flex justify-end items-center p-4 border-t border-gray-700"
+          >
+            <button
+              type="submit"
+              id="form-submit-button"
+              class="bg-primary text-white font-semibold py-2 px-4 rounded-lg hover:bg-primary-hover transition-colors"
+            >
+              Save Product
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // --- CONFIG & AUTH ---
+      const API_ROOT_URL = "http://localhost:3001";
+      const API_BASE_URL = `${API_ROOT_URL}/api/admin`;
+      const token = localStorage.getItem("admin_token");
+      if (!token) window.location.href = "login.html";
+
+      document.getElementById("logout-button").addEventListener("click", () => {
+        localStorage.removeItem("admin_token");
+        window.location.href = "login.html";
+      });
+
+      // --- ELEMENTS ---
+      const tableBody = document.getElementById("products-table-body");
+      const modal = document.getElementById("product-modal");
+      const modalTitle = document.getElementById("modal-title");
+      const form = document.getElementById("product-form");
+      const addProductButton = document.getElementById("add-product-button");
+      const closeButton = document.getElementById("modal-close-button");
+
+      // --- STATE ---
+      let currentProducts = [];
+
+      // --- API CALLS ---
+      const fetchProducts = async () => {
+        tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-400">Loading products...</td></tr>`;
+        try {
+          const response = await fetch(
+            `http://localhost:3001/api/admin/products`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
+          currentProducts = await response.json();
+          renderTable(currentProducts);
+        } catch (error) {
+          console.error("Failed to fetch products:", error);
+          tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-red-400">Error: Could not load products. Is the API server running?</td></tr>`;
+        }
+      };
+
+      const saveProduct = async (productData) => {
+        const isEditing = !!productData.id;
+        const url = isEditing
+          ? `${API_BASE_URL}/products/${productData.id}`
+          : `${API_BASE_URL}/products`;
+        const method = isEditing ? "PUT" : "POST";
+
+        // Remove the 'id' field from the data sent to the backend for new products
+        const dataToSend = { ...productData };
+        if (!isEditing) {
+          delete dataToSend.id;
+        }
+
+        try {
+          const response = await fetch(url, {
+            method: method,
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+            body: JSON.stringify(dataToSend),
+          });
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
+          return await response.json();
+        } catch (error) {
+          console.error("Failed to save product:", error);
+          alert("Error: Could not save product. Check console for details.");
+        }
+      };
+
+      const deleteProduct = async (productId) => {
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/products/${productId}`,
+            {
+              method: "DELETE",
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
+          return await response.json();
+        } catch (error) {
+          console.error("Failed to delete product:", error);
+          alert("Error: Could not delete product.");
+        }
+      };
+
+      // --- RENDERING ---
+      const renderTable = (products) => {
+        tableBody.innerHTML = ""; // Clear existing rows
+        if (!products || products.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="4" class="p-8 text-center text-gray-400">No products found. Add one to get started!</td></tr>`;
+          return;
+        }
+        products.forEach((p) => {
+          const row = document.createElement("tr");
+          const fullImageUrl = `${API_ROOT_URL}/${p.image_url}`;
+          row.innerHTML = `
+            <td class="p-4 flex items-center gap-4">
+              <img src="${fullImageUrl}" alt="${
+            p.name
+          }" class="h-12 w-12 rounded-md object-cover bg-gray-700">
+              <div>
+                <p class="font-medium text-gray-200">${p.name}</p>
+                <p class="text-sm text-gray-400">ID: ${p.id}</p>
+              </div>
+            </td>
+            <td class="p-4 text-sm text-gray-400">${p.category}</td>
+            <td class="p-4 text-sm font-medium text-gray-200">$${(
+              p.price_in_cents / 100
+            ).toFixed(2)}</td>
+            <td class="p-4 text-sm space-x-2">
+              <button class="text-blue-400 hover:text-blue-300 font-medium edit-btn" data-id="${
+                p.id
+              }">Edit</button>
+              <button class="text-red-400 hover:text-red-300 font-medium delete-btn" data-id="${
+                p.id
+              }">Delete</button>
+            </td>
+          `;
+          tableBody.appendChild(row);
+        });
+      };
+
+      // --- MODAL & FORM LOGIC ---
+      const openModal = (mode = "add", product = null) => {
+        form.reset();
+        document.getElementById("product-id").value = "";
+        if (mode === "edit" && product) {
+          modalTitle.textContent = "Edit Product";
+          document.getElementById("product-id").value = product.id;
+          document.getElementById("name").value = product.name;
+          document.getElementById("description").value = product.description;
+          document.getElementById("price_in_cents").value =
+            product.price_in_cents;
+          document.getElementById("image_url").value = product.image_url;
+          document.getElementById("category").value = product.category;
+          document.getElementById("team_type").value = product.team_type;
+        } else {
+          modalTitle.textContent = "Add New Product";
+        }
+        modal.classList.remove("hidden");
+      };
+
+      const closeModal = () => modal.classList.add("hidden");
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const productData = {
+          id: document.getElementById("product-id").value,
+          name: document.getElementById("name").value,
+          description: document.getElementById("description").value,
+          price_in_cents: parseInt(
+            document.getElementById("price_in_cents").value,
+            10
+          ),
+          image_url: document.getElementById("image_url").value,
+          category: document.getElementById("category").value,
+          team_type: document.getElementById("team_type").value,
+        };
+
+        await saveProduct(productData);
+        closeModal();
+        fetchProducts(); // Refresh table
+      });
+
+      tableBody.addEventListener("click", (e) => {
+        if (e.target.classList.contains("edit-btn")) {
+          const productId = parseInt(e.target.dataset.id, 10);
+          const productToEdit = currentProducts.find((p) => p.id === productId);
+          if (productToEdit) openModal("edit", productToEdit);
+        }
+        if (e.target.classList.contains("delete-btn")) {
+          const productId = e.target.dataset.id;
+          if (
+            confirm(
+              "Are you sure you want to delete this product? This action cannot be undone."
+            )
+          ) {
+            deleteProduct(productId).then(() => fetchProducts());
+          }
+        }
+      });
+
+      addProductButton.addEventListener("click", () => openModal("add"));
+      closeButton.addEventListener("click", closeModal);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.classList.contains("hidden"))
+          closeModal();
+      });
+
+      // --- INITIALIZE ---
+      fetchProducts();
+    </script>
+  </body>
+</html>

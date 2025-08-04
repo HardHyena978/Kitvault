@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard - KitVault Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            colors: {
+              primary: { DEFAULT: "#3b82f6", hover: "#2563eb" },
+              gray: {
+                900: "#111827",
+                800: "#1f2937",
+                700: "#374151",
+                600: "#4b5563",
+                400: "#9ca3af",
+                200: "#e5e7eb",
+                100: "#f3f4f6",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-900 text-gray-200 antialiased">
+    <div class="min-h-screen flex">
+      <!-- Sidebar -->
+      <aside class="w-64 bg-gray-800 flex flex-col">
+        <div class="p-6 flex items-center gap-3">
+          <svg
+            class="h-7 w-7 text-primary"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.956 11.956 0 0 1 12 3c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.604.328-3.136.92-4.562"
+            />
+          </svg>
+          <h1 class="text-xl font-semibold text-gray-100">KitVault</h1>
+        </div>
+        <nav class="flex-1 px-4 space-y-2">
+          <a
+            href="dashboard.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-100 bg-primary/10 border border-primary/30 font-medium"
+            ><span>Dashboard</span></a
+          >
+          <a
+            href="products.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>Manage Products</span></a
+          >
+          <a
+            href="orders.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>View Orders</span></a
+          >
+          <a
+            href="users.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>Manage Users</span></a
+          >
+        </nav>
+        <div class="p-4">
+          <button
+            id="logout-button"
+            class="w-full flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+          >
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content -->
+      <main class="flex-1 p-10">
+        <div class="max-w-7xl mx-auto">
+          <!-- Header -->
+          <div class="border-l-4 border-primary pl-4 mb-12">
+            <h2 class="text-3xl font-bold text-gray-100">Dashboard</h2>
+            <p class="text-gray-400 mt-1">
+              A quick overview of your store's performance.
+            </p>
+          </div>
+
+          <!-- Statistics Section -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-sm font-medium text-gray-400">Total Revenue</h3>
+              <p
+                id="stats-revenue"
+                class="text-3xl font-semibold text-gray-100 mt-2"
+              >
+                --
+              </p>
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-sm font-medium text-gray-400">Total Orders</h3>
+              <p
+                id="stats-total-orders"
+                class="text-3xl font-semibold text-gray-100 mt-2"
+              >
+                --
+              </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-sm font-medium text-gray-400">Pending Orders</h3>
+              <p
+                id="stats-pending-orders"
+                class="text-3xl font-semibold text-gray-100 mt-2"
+              >
+                --
+              </p>
+            </div>
+            <div class="bg-gray-800 p-6 rounded-lg">
+              <h3 class="text-sm font-medium text-gray-400">Total Products</h3>
+              <p
+                id="stats-total-products"
+                class="text-3xl font-semibold text-gray-100 mt-2"
+              >
+                --
+              </p>
+            </div>
+          </div>
+          <div class="mt-12 grid grid-cols-1 lg:grid-cols-5 gap-6">
+            <!-- Revenue Chart -->
+            <div
+              class="lg:col-span-3 bg-gray-800 p-6 rounded-lg border border-gray-700"
+            >
+              <h3 class="text-lg font-semibold text-gray-200 mb-4">
+                Monthly Revenue
+              </h3>
+              <div>
+                <canvas id="revenueChart"></canvas>
+              </div>
+            </div>
+            <!-- Order Status Chart -->
+            <div
+              class="lg:col-span-2 bg-gray-800 p-6 rounded-lg border border-gray-700"
+            >
+              <h3 class="text-lg font-semibold text-gray-200 mb-4">
+                Order Status
+              </h3>
+              <div class="max-w-xs mx-auto">
+                <canvas id="orderStatusChart"></canvas>
+              </div>
+            </div>
+          </div>
+          <!-- Recent Orders Section -->
+          <div class="mt-12">
+            <h3 class="text-xl font-bold text-gray-200 mb-4">Recent Orders</h3>
+            <div class="bg-gray-800 rounded-lg border border-gray-700">
+              <div class="overflow-x-auto">
+                <table class="w-full text-left">
+                  <thead class="bg-gray-700/50">
+                    <tr>
+                      <th class="p-4 font-semibold text-sm text-gray-300">
+                        Order ID
+                      </th>
+                      <th class="p-4 font-semibold text-sm text-gray-300">
+                        Customer
+                      </th>
+                      <th class="p-4 font-semibold text-sm text-gray-300">
+                        Date
+                      </th>
+                      <th class="p-4 font-semibold text-sm text-gray-300">
+                        Total
+                      </th>
+                      <th class="p-4 font-semibold text-sm text-gray-300">
+                        Status
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="recent-orders-table"
+                    class="divide-y divide-gray-700"
+                  >
+                    <!-- JS will populate this -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      // --- CONFIG & AUTH ---
+      const API_ROOT_URL = "http://localhost:3001";
+      const API_BASE_URL = `${API_ROOT_URL}/api/admin`;
+      const token = localStorage.getItem("admin_token");
+      if (!token) window.location.href = "login.html";
+
+      document.getElementById("logout-button").addEventListener("click", () => {
+        localStorage.removeItem("admin_token");
+        window.location.href = "login.html";
+      });
+
+      // --- ELEMENTS ---
+      const statsRevenueEl = document.getElementById("stats-revenue");
+      const statsTotalOrdersEl = document.getElementById("stats-total-orders");
+      const statsPendingOrdersEl = document.getElementById(
+        "stats-pending-orders"
+      );
+      const statsTotalProductsEl = document.getElementById(
+        "stats-total-products"
+      );
+      const recentOrdersTable = document.getElementById("recent-orders-table");
+
+      // --- API CALLS ---
+      const fetchStats = async () => {
+        const response = await fetch(`${API_BASE_URL}/stats`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!response.ok) throw new Error("Failed to fetch dashboard stats");
+        return response.json();
+      };
+
+      const fetchRecentOrders = async () => {
+        const response = await fetch(`${API_BASE_URL}/orders`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!response.ok) throw new Error("Failed to fetch recent orders");
+        return response.json();
+      };
+
+      // --- RENDERING ---
+      const renderStats = (stats) => {
+        const revenueInDollars = (stats.totalRevenue / 100).toLocaleString(
+          "en-US",
+          {
+            style: "currency",
+            currency: "USD",
+          }
+        );
+        statsRevenueEl.textContent = revenueInDollars;
+        statsTotalOrdersEl.textContent = stats.totalOrders;
+        statsPendingOrdersEl.textContent = stats.pendingOrders;
+        statsTotalProductsEl.textContent = stats.totalProducts;
+      };
+
+      const renderRecentOrders = (orders) => {
+        recentOrdersTable.innerHTML = "";
+        if (!orders || orders.length === 0) {
+          recentOrdersTable.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-gray-400">No recent orders found.</td></tr>`;
+          return;
+        }
+
+        // Show only the 5 most recent orders
+        const ordersToShow = orders.slice(0, 5);
+
+        ordersToShow.forEach((order) => {
+          const row = document.createElement("tr");
+          row.innerHTML = `
+                <td class="p-4 text-sm font-medium text-gray-200">#${
+                  order.id
+                }</td>
+                <td class="p-4 text-sm text-gray-400">${order.user_id}</td>
+                <td class="p-4 text-sm text-gray-400">${new Date(
+                  order.created_at
+                ).toLocaleDateString()}</td>
+                <td class="p-4 text-sm font-medium text-gray-200">$${(
+                  order.total_amount_in_cents / 100
+                ).toFixed(2)}</td>
+                <td class="p-4 text-sm">
+                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      order.status === "completed"
+                        ? "bg-green-500/10 text-green-400"
+                        : "bg-yellow-500/10 text-yellow-400"
+                    }">
+                        ${
+                          order.status.charAt(0).toUpperCase() +
+                          order.status.slice(1)
+                        }
+                    </span>
+                </td>
+            `;
+          recentOrdersTable.appendChild(row);
+        });
+      };
+
+      const fetchChartData = async () => {
+        const response = await fetch(`${API_BASE_URL}/chart-data`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!response.ok) throw new Error("Failed to fetch chart data");
+        return response.json();
+      };
+
+      // --- CHART RENDERING ---
+      const renderRevenueChart = (monthlyRevenue) => {
+        const ctx = document.getElementById("revenueChart").getContext("2d");
+
+        // Prepare data for the chart
+        const labels = monthlyRevenue.map((item) =>
+          new Date(item.month).toLocaleString("default", {
+            month: "short",
+            year: "2-digit",
+          })
+        );
+        const data = monthlyRevenue.map((item) => item.revenue / 100); // Convert cents to dollars
+
+        new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: "Revenue ($)",
+                data: data,
+                backgroundColor: "rgba(59, 130, 246, 0.5)", // primary color with transparency
+                borderColor: "rgba(59, 130, 246, 1)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: { beginAtZero: true },
+            },
+            plugins: {
+              legend: { display: false },
+            },
+          },
+        });
+      };
+
+      const renderOrderStatusChart = (orderStatusCounts) => {
+        const ctx = document
+          .getElementById("orderStatusChart")
+          .getContext("2d");
+
+        const labels = orderStatusCounts.map(
+          (item) => item.status.charAt(0).toUpperCase() + item.status.slice(1)
+        );
+        const data = orderStatusCounts.map((item) => item.count);
+
+        new Chart(ctx, {
+          type: "doughnut",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                data: data,
+                backgroundColor: [
+                  "rgba(16, 185, 129, 0.7)", // Green for completed
+                  "rgba(245, 158, 11, 0.7)", // Yellow for pending
+                  "rgba(107, 114, 128, 0.7)", // Gray for other statuses
+                ],
+                borderColor: "#1f2937", // Matches card background
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+            },
+          },
+        });
+      };
+
+      // --- INITIALIZE ---
+      const initializeDashboard = async () => {
+        recentOrdersTable.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-gray-400">Loading dashboard data...</td></tr>`;
+        try {
+          // Fetch stats and orders in parallel for a faster load time
+          const [stats, orders, chartData] = await Promise.all([
+            fetchStats(),
+            fetchRecentOrders(),
+            fetchChartData(),
+          ]);
+          renderRevenueChart(chartData.monthlyRevenue);
+          renderOrderStatusChart(chartData.orderStatusCounts);
+          renderStats(stats);
+          renderRecentOrders(orders);
+        } catch (error) {
+          console.error("Failed to initialize dashboard:", error);
+          recentOrdersTable.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-red-400">Error: Could not load dashboard data.</td></tr>`;
+          // Also show error in the stat cards
+          statsRevenueEl.textContent = "Error";
+          statsTotalOrdersEl.textContent = "Error";
+          statsPendingOrdersEl.textContent = "Error";
+          statsTotalProductsEl.textContent = "Error";
+        }
+      };
+
+      initializeDashboard();
+    </script>
+  </body>
+</html>

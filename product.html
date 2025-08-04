@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Product Details - KitVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      // UPDATED Tailwind config for modern design
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              primary: "#2563eb",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+
+  <body class="bg-white text-slate-700">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 top-4 left-4 px-4 py-2 bg-white shadow-lg rounded-lg"
+    >
+      Skip to main content
+    </a>
+
+    <!-- Consistent Header -->
+    <header
+      id="main-header"
+      class="bg-white/90 backdrop-blur-sm shadow-sm fixed top-0 left-0 right-0 z-40 transition-colors duration-300"
+    >
+      <nav
+        class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-slate-900">
+          <img
+            class="object-contain h-9"
+            src="assets/logo_horizontal.png"
+            alt="KITVAULT"
+          />
+        </a>
+        <div class="hidden md:flex space-x-6 items-center">
+          <a
+            href="all-items.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >All Kits</a
+          >
+          <a
+            href="retro-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Retro</a
+          >
+          <a
+            href="current-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Current</a
+          >
+          <a
+            href="concept-jerseys.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Concepts</a
+          >
+          <a
+            href="orders.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Orders</a
+          >
+          <a
+            href="cart.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium relative"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              />
+            </svg>
+            <span
+              id="cart-count"
+              class="absolute -top-1 -right-2 bg-primary text-white text-[10px] font-semibold rounded-full h-4 w-4 flex items-center justify-center"
+              >0</span
+            >
+          </a>
+          <div id="auth-links" class="flex items-center gap-x-4"></div>
+        </div>
+        <div class="md:hidden flex items-center">
+          <button
+            id="mobile-menu-button"
+            class="text-slate-900 focus:outline-none"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Mobile Menu HTML -->
+    <div
+      id="mobile-menu"
+      class="md:hidden fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 hidden transition-transform duration-300 ease-in-out transform translate-x-full"
+    >
+      <!-- Mobile menu content here... -->
+    </div>
+
+    <main id="main-content">
+      <section class="pt-32 pb-20">
+        <div class="container mx-auto px-6">
+          <div class="text-sm text-slate-500 mb-6" id="breadcrumbs">
+            <a href="index.html" class="hover:text-primary">Home</a>
+          </div>
+
+          <div
+            id="message-area"
+            class="mb-6 p-4 rounded-lg text-center text-lg font-semibold hidden"
+          ></div>
+
+          <div
+            id="product-details"
+            class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start"
+          >
+            <!-- Product details will be loaded here by JS -->
+            <!-- Loading state -->
+            <div
+              class="w-full h-96 bg-slate-100 rounded-lg animate-pulse"
+            ></div>
+            <div class="space-y-4">
+              <div class="w-3/4 h-10 bg-slate-100 rounded animate-pulse"></div>
+              <div class="w-1/4 h-8 bg-slate-100 rounded animate-pulse"></div>
+              <div class="w-full h-24 bg-slate-100 rounded animate-pulse"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- You Might Also Like Section -->
+      <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-6">
+          <h2 class="text-3xl font-bold text-center mb-12 text-slate-900">
+            You Might Also Like
+          </h2>
+          <div
+            id="related-products"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8"
+          >
+            <!-- Related products will be loaded here -->
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Consistent Footer -->
+    <footer id="contact" class="bg-white border-t border-slate-100">
+      <div class="container mx-auto px-6 py-12">
+        <div class="text-center">
+          <a href="#" class="flex justify-center">
+            <img src="assets/logo_horizontal.png" alt="KITVAULT" class="h-10" />
+          </a>
+          <div class="flex justify-center space-x-6 mt-6">
+            <a
+              href="contact.html"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Contact</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Facebook</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Instagram</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Twitter/X</a
+            >
+          </div>
+          <p class="mt-8 text-slate-500 text-sm">
+            © 2025 KitVault. All Rights Reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- CONSOLIDATED JAVASCRIPT BLOCK -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- 1. ELEMENT SELECTORS ---
+        const productDetailsContainer =
+          document.getElementById("product-details");
+        const breadcrumbsContainer = document.getElementById("breadcrumbs");
+        const messageArea = document.getElementById("message-area");
+        const relatedProductsContainer =
+          document.getElementById("related-products");
+
+        // --- 2. STANDARD UI FUNCTIONS ---
+        const initStandardUI = () => {
+          // Dummy functions to be replaced with actual ones if needed,
+          // assuming they are part of a shared script eventually.
+          // For now, they are fully implemented here for self-containment.
+          const header = document.getElementById("main-header");
+          if (header) {
+            window.addEventListener("scroll", () => {
+              header.classList.toggle("bg-white", window.scrollY > 50);
+              header.classList.toggle("bg-white/90", window.scrollY <= 50);
+            });
+          }
+
+          const mobileMenuButton =
+            document.getElementById("mobile-menu-button");
+          const closeMobileMenuButton =
+            document.getElementById("close-mobile-menu");
+          const mobileMenu = document.getElementById("mobile-menu");
+          if (mobileMenuButton && closeMobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener("click", () => {
+              mobileMenu.classList.remove("hidden");
+              requestAnimationFrame(() => {
+                mobileMenu.classList.remove("translate-x-full");
+              });
+            });
+            closeMobileMenuButton.addEventListener("click", () => {
+              mobileMenu.classList.add("translate-x-full");
+              setTimeout(() => mobileMenu.classList.add("hidden"), 300);
+            });
+          }
+        };
+
+        const updateCartCount = () => {
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+          const cartCountSpan = document.getElementById("cart-count");
+          if (cartCountSpan) cartCountSpan.textContent = cartCount;
+        };
+
+        const initAuth = () => {
+          const token = localStorage.getItem("token");
+          const authLinksContainer = document.getElementById("auth-links");
+          if (!authLinksContainer) return;
+          const logout = (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            window.location.href = "index.html";
+          };
+          if (token) {
+            authLinksContainer.innerHTML = `<a href="#" id="logout-button" class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium">Logout</a>`;
+            document
+              .getElementById("logout-button")
+              .addEventListener("click", logout);
+          } else {
+            authLinksContainer.innerHTML = `
+              <a href="login.html" class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium">Login</a>
+              <a href="register.html" class="bg-slate-800 text-white font-semibold px-4 py-2 rounded-lg hover:bg-slate-900 transition-colors duration-300">Register</a>`;
+          }
+        };
+
+        // --- 3. PRODUCT-SPECIFIC FUNCTIONS ---
+
+        const displayMessage = (message, isError = false) => {
+          messageArea.textContent = message;
+          messageArea.className = `mb-6 p-4 rounded-lg text-center text-lg font-semibold ${
+            isError ? "bg-red-100 text-red-700" : "bg-green-100 text-green-700"
+          }`;
+          setTimeout(() => (messageArea.className += " hidden"), 5000);
+        };
+
+        const updateBreadcrumbs = (product) => {
+          let categoryPath = "all-items.html";
+          let categoryName = "All Kits";
+          if (product.category === "retro") {
+            categoryPath = "retro-kits.html";
+            categoryName = "Retro Kits";
+          } else if (product.category === "current") {
+            categoryPath = "current-kits.html";
+            categoryName = "Current Kits";
+          } else if (product.category === "custom") {
+            categoryPath = "concept-jerseys.html";
+            categoryName = "Concept Jerseys";
+          }
+          breadcrumbsContainer.innerHTML += ` / <a href="${categoryPath}" class="hover:text-primary">${categoryName}</a> / <span class="font-semibold text-slate-800">${product.name}</span>`;
+        };
+
+        const renderProductDetails = (product) => {
+          document.title = `${product.name} - KitVault`;
+          productDetailsContainer.innerHTML = `
+            <div>
+              <div class="bg-white rounded-lg shadow-lg p-4">
+                <img src="${product.image_url}" alt="${
+            product.name
+          }" class="w-full h-auto rounded-md object-cover">
+              </div>
+            </div>
+            <div class="space-y-6">
+              <h1 class="text-4xl font-bold text-slate-900">${product.name}</h1>
+              <p class="text-4xl font-bold text-slate-800">$${(
+                product.price_in_cents / 100
+              ).toFixed(2)}</p>
+              <p class="text-slate-600 leading-relaxed">${
+                product.description
+              }</p>
+              
+              <div class="space-y-6 pt-4">
+                <div>
+                  <label class="text-sm font-bold text-slate-700">Size</label>
+                  <div class="mt-2 flex space-x-2 bg-slate-100 p-1.5 rounded-full w-min" id="size-selection">
+                    <button class="size-btn px-5 py-2 rounded-full text-sm font-semibold transition-colors text-slate-600" data-size="S">S</button>
+                    <button class="size-btn px-5 py-2 rounded-full text-sm font-semibold transition-colors text-slate-600" data-size="M">M</button>
+                    <button class="size-btn px-5 py-2 rounded-full text-sm font-semibold transition-colors text-slate-600" data-size="L">L</button>
+                    <button class="size-btn px-5 py-2 rounded-full text-sm font-semibold transition-colors text-slate-600" data-size="XL">XL</button>
+                  </div>
+                </div>
+                
+                <div>
+                  <label for="custom-name" class="text-sm font-bold text-slate-700">Custom Name (+$5.00)</label>
+                  <input type="text" id="custom-name" class="w-full mt-2 p-2.5 border border-slate-200 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                  <label for="custom-number" class="text-sm font-bold text-slate-700">Custom Number (+$5.00)</label>
+                  <input type="number" id="custom-number" class="w-full mt-2 p-2.5 border border-slate-200 bg-slate-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <button id="add-to-cart-btn" class="w-full bg-slate-900 text-white font-bold py-4 rounded-lg text-lg hover:bg-slate-700 transition-colors duration-300 transform hover:scale-[1.02]">Add to Cart</button>
+              </div>
+            </div>
+          `;
+
+          // Add event listeners after rendering the content
+          let selectedSize = null;
+          const sizeButtons = document.querySelectorAll(".size-btn");
+          sizeButtons.forEach((button) => {
+            button.addEventListener("click", () => {
+              sizeButtons.forEach((btn) => {
+                btn.classList.remove("bg-white", "text-slate-900", "shadow");
+                btn.classList.add("text-slate-600");
+              });
+              button.classList.add("bg-white", "text-slate-900", "shadow");
+              button.classList.remove("text-slate-600");
+              selectedSize = button.dataset.size;
+            });
+          });
+
+          document
+            .getElementById("add-to-cart-btn")
+            .addEventListener("click", () => {
+              if (!selectedSize) {
+                displayMessage("Please select a size.", true);
+                return;
+              }
+
+              const customName =
+                document.getElementById("custom-name").value || null;
+              const customNumber =
+                document.getElementById("custom-number").value || null;
+              let price = product.price_in_cents;
+              if (customName) price += 500;
+              if (customNumber) price += 500;
+
+              let cart = JSON.parse(localStorage.getItem("cart")) || [];
+              const existingItemIndex = cart.findIndex(
+                (item) =>
+                  item.id === product.id &&
+                  item.size === selectedSize &&
+                  item.custom_name === customName &&
+                  item.custom_number === customNumber
+              );
+
+              if (existingItemIndex > -1) {
+                cart[existingItemIndex].quantity++;
+              } else {
+                cart.push({
+                  id: product.id,
+                  name: product.name,
+                  image_url: product.image_url,
+                  quantity: 1,
+                  size: selectedSize,
+                  price_in_cents: price,
+                  custom_name: customName,
+                  custom_number: customNumber,
+                });
+              }
+              localStorage.setItem("cart", JSON.stringify(cart));
+              updateCartCount();
+              displayMessage(
+                `${product.name} (${selectedSize}) has been added to your cart!`
+              );
+            });
+        };
+
+        const renderRelatedProducts = async (productId) => {
+          try {
+            const response = await fetch("http://localhost:3001/api/products");
+            const allProducts = await response.json();
+            const related = allProducts
+              .filter((p) => p.id !== parseInt(productId))
+              .sort(() => 0.5 - Math.random()) // Shuffle and take 4
+              .slice(0, 4);
+
+            relatedProductsContainer.innerHTML = "";
+            related.forEach((rp) => {
+              relatedProductsContainer.innerHTML += `
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-all duration-300 hover:shadow-xl">
+                  <a href="product.html?id=${
+                    rp.id
+                  }" class="block h-72 overflow-hidden">
+                      <img src="${rp.image_url}" alt="${
+                rp.name
+              }" class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-105" loading="lazy">
+                  </a>
+                  <div class="p-6">
+                      <h3 class="text-lg font-semibold mb-1 text-slate-900 truncate" title="${
+                        rp.name
+                      }">
+                          <a href="product.html?id=${
+                            rp.id
+                          }" class="hover:text-primary transition-colors">${
+                rp.name
+              }</a>
+                      </h3>
+                      <p class="text-base font-bold text-slate-800 mb-4">$${(
+                        rp.price_in_cents / 100
+                      ).toFixed(2)}</p>
+                      <a href="product.html?id=${
+                        rp.id
+                      }" class="w-full text-center block bg-slate-800 text-white font-semibold py-2.5 rounded-lg hover:bg-slate-900 transition-colors duration-300">View Product</a>
+                  </div>
+                </div>`;
+            });
+          } catch (error) {
+            relatedProductsContainer.innerHTML =
+              "<p>Could not load related products.</p>";
+          }
+        };
+
+        // --- 4. INITIALIZATION ---
+
+        const initPage = async () => {
+          initStandardUI();
+          updateCartCount();
+          initAuth();
+
+          const urlParams = new URLSearchParams(window.location.search);
+          const productId = urlParams.get("id");
+
+          if (!productId) {
+            productDetailsContainer.innerHTML =
+              '<p class="text-center text-2xl text-slate-600 col-span-full">Product not found. Please select a product from one of our collections.</p>';
+            return;
+          }
+
+          try {
+            const response = await fetch(
+              `http://localhost:3001/api/products/${productId}`
+            );
+            if (!response.ok) throw new Error("Product not found");
+            const product = await response.json();
+
+            renderProductDetails(product);
+            updateBreadcrumbs(product);
+            renderRelatedProducts(productId);
+          } catch (error) {
+            productDetailsContainer.innerHTML = `<p class="text-center text-2xl text-red-600 col-span-full">${error.message}. Please return to a collection page.</p>`;
+          }
+        };
+
+        initPage();
+      });
+    </script>
+  </body>
+</html>

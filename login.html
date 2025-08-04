@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - KitVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              primary: "#2563eb",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="bg-slate-50 text-slate-700">
+    <!-- Consistent Header -->
+    <header
+      id="main-header"
+      class="bg-white/90 backdrop-blur-sm shadow-sm absolute top-0 left-0 right-0 z-40 transition-colors duration-300"
+    >
+      <nav
+        class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-slate-900">
+          <img
+            class="object-contain h-9"
+            src="assets/logo_horizontal.png"
+            alt="KITVAULT"
+          />
+        </a>
+        <div class="hidden md:flex space-x-6 items-center">
+          <a
+            href="all-items.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >All Kits</a
+          >
+          <a
+            href="retro-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Retro</a
+          >
+          <a
+            href="current-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Current</a
+          >
+          <a
+            href="concept-jerseys.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Concepts</a
+          >
+          <a
+            href="orders.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Orders</a
+          >
+          <a
+            href="cart.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium relative"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              />
+            </svg>
+            <span
+              id="cart-count"
+              class="absolute -top-1 -right-2 bg-primary text-white text-[10px] font-semibold rounded-full h-4 w-4 flex items-center justify-center"
+              >0</span
+            >
+          </a>
+          <div id="auth-links" class="flex items-center gap-x-4"></div>
+        </div>
+        <div class="md:hidden flex items-center">
+          <button
+            id="mobile-menu-button"
+            class="text-slate-900 focus:outline-none"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Mobile Menu HTML -->
+    <div
+      id="mobile-menu"
+      class="md:hidden fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 hidden transition-transform duration-300 ease-in-out transform translate-x-full"
+    >
+      <!-- Mobile menu content here... -->
+    </div>
+
+    <main class="flex items-center justify-center min-h-screen px-4 py-24">
+      <div class="w-full max-w-md">
+        <div class="bg-white p-8 rounded-lg shadow-lg text-center">
+          <a href="index.html" class="inline-block mb-6">
+            <img
+              class="object-contain h-10 mx-auto"
+              src="assets/logo_horizontal.png"
+              alt="KITVAULT"
+            />
+          </a>
+          <h1 class="text-3xl font-bold mb-2 text-slate-900">Welcome Back</h1>
+          <p class="text-slate-600 mb-6">Sign in to continue to KitVault</p>
+
+          <form id="login-form" class="space-y-6 text-left">
+            <div>
+              <label for="email" class="font-semibold text-slate-700"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                class="mt-2 w-full px-4 py-3 border border-slate-200 bg-slate-100 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition"
+              />
+            </div>
+            <div>
+              <label for="password" class="font-semibold text-slate-700"
+                >Password</label
+              >
+              <input
+                type="password"
+                id="password"
+                name="password"
+                required
+                class="mt-2 w-full px-4 py-3 border border-slate-200 bg-slate-100 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition"
+              />
+            </div>
+
+            <p id="error-message" class="text-red-500 text-sm hidden"></p>
+
+            <button
+              type="submit"
+              id="submit-button"
+              class="w-full bg-slate-900 text-white font-bold py-3.5 px-6 rounded-lg text-lg hover:bg-slate-700 transition-all duration-300 disabled:opacity-70"
+            >
+              Sign In
+            </button>
+          </form>
+
+          <p class="text-center mt-6 text-slate-600">
+            Don't have an account?
+            <a
+              href="register.html"
+              class="font-semibold text-primary hover:underline"
+            >
+              Register here
+            </a>
+          </p>
+        </div>
+      </div>
+    </main>
+
+    <!-- CONSOLIDATED JAVASCRIPT BLOCK -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- 1. ELEMENT SELECTORS ---
+        const loginForm = document.getElementById("login-form");
+        const emailInput = document.getElementById("email");
+        const passwordInput = document.getElementById("password");
+        const errorMessage = document.getElementById("error-message");
+        const submitButton = document.getElementById("submit-button");
+
+        // --- 2. STANDARD UI FUNCTIONS ---
+        const initStandardUI = () => {
+          // All standard functions for header, mobile menu, auth, cart are included here
+          const header = document.getElementById("main-header");
+          if (header) {
+            window.addEventListener("scroll", () => {
+              header.classList.toggle("bg-white", window.scrollY > 50);
+              header.classList.toggle("bg-white/90", window.scrollY <= 50);
+            });
+          }
+
+          const mobileMenuButton =
+            document.getElementById("mobile-menu-button");
+          const closeMobileMenuButton =
+            document.getElementById("close-mobile-menu");
+          const mobileMenu = document.getElementById("mobile-menu");
+          if (mobileMenuButton && closeMobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener("click", () => {
+              mobileMenu.classList.remove("hidden");
+              requestAnimationFrame(() => {
+                mobileMenu.classList.remove("translate-x-full");
+              });
+            });
+            closeMobileMenuButton.addEventListener("click", () => {
+              mobileMenu.classList.add("translate-x-full");
+              setTimeout(() => mobileMenu.classList.add("hidden"), 300);
+            });
+          }
+        };
+
+        const updateCartCount = () => {
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+          const cartCountSpan = document.getElementById("cart-count");
+          if (cartCountSpan) cartCountSpan.textContent = cartCount;
+        };
+
+        const initAuth = () => {
+          const token = localStorage.getItem("token");
+          if (token) {
+            // If user is already logged in, redirect them away from the login page
+            window.location.href = "all-items.html";
+          }
+          // No need to show login/register links on the login page itself
+          const authLinksContainer = document.getElementById("auth-links");
+          if (authLinksContainer) {
+            authLinksContainer.innerHTML = `
+              <a href="login.html" class="text-primary font-semibold">Login</a>
+              <a href="register.html" class="bg-slate-800 text-white font-semibold px-4 py-2 rounded-lg hover:bg-slate-900 transition-colors duration-300">Register</a>`;
+          }
+        };
+
+        // --- 3. LOGIN FORM LOGIC ---
+        const handleLogin = async (e) => {
+          e.preventDefault();
+          errorMessage.classList.add("hidden");
+          submitButton.disabled = true;
+          submitButton.textContent = "Signing In...";
+
+          const email = emailInput.value;
+          const password = passwordInput.value;
+
+          try {
+            const response = await fetch(
+              "http://localhost:3001/api/auth/login",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+              }
+            );
+
+            const data = await response.json();
+
+            if (response.ok) {
+              localStorage.setItem("token", data.token);
+              // Redirect to a relevant page, e.g., the main shop page
+              window.location.href = "all-items.html";
+            } else {
+              errorMessage.textContent =
+                data.msg || "Login failed. Please check your credentials.";
+              errorMessage.classList.remove("hidden");
+              submitButton.disabled = false;
+              submitButton.textContent = "Sign In";
+            }
+          } catch (error) {
+            errorMessage.textContent =
+              "A network error occurred. Please try again.";
+            errorMessage.classList.remove("hidden");
+            submitButton.disabled = false;
+            submitButton.textContent = "Sign In";
+          }
+        };
+
+        loginForm.addEventListener("submit", handleLogin);
+
+        // --- 4. INITIALIZATION ---
+        const init = () => {
+          initStandardUI();
+          updateCartCount();
+          initAuth();
+        };
+
+        init();
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>View Orders - KitVault Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            colors: {
+              primary: { DEFAULT: "#3b82f6", hover: "#2563eb" },
+              gray: {
+                900: "#111827",
+                800: "#1f2937",
+                700: "#374151",
+                600: "#4b5563",
+                400: "#9ca3af",
+                200: "#e5e7eb",
+                100: "#f3f4f6",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-900 text-gray-200 antialiased">
+    <div class="min-h-screen flex">
+      <!-- Sidebar (No changes needed) -->
+      <aside class="w-64 bg-gray-800 flex flex-col">
+        <div class="p-6 flex items-center gap-3">
+          <svg
+            class="h-7 w-7 text-primary"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke-width="1.5"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.956 11.956 0 0 1 12 3c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.604.328-3.136.92-4.562"
+            />
+          </svg>
+          <h1 class="text-xl font-semibold text-gray-100">KitVault</h1>
+        </div>
+        <nav class="flex-1 px-4 space-y-2">
+          <a
+            href="dashboard.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>Dashboard</span></a
+          >
+          <a
+            href="products.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>Manage Products</span></a
+          >
+          <a
+            href="orders.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-100 bg-primary/10 border border-primary/30 font-medium"
+            ><span>View Orders</span></a
+          >
+          <a
+            href="users.html"
+            class="flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+            ><span>Manage Users</span></a
+          >
+        </nav>
+        <div class="p-4">
+          <button
+            id="logout-button"
+            class="w-full flex items-center gap-3 py-2 px-3 rounded-md text-gray-400 hover:bg-gray-700/50 hover:text-gray-200 transition-colors"
+          >
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content (No changes needed) -->
+      <main class="flex-1 p-10">
+        <div class="max-w-7xl mx-auto">
+          <div class="border-l-4 border-primary pl-4 mb-8">
+            <h2 class="text-3xl font-bold text-gray-100">All Orders</h2>
+            <p class="text-gray-400 mt-1">
+              Search, view, and manage all customer purchases.
+            </p>
+          </div>
+          <div class="bg-gray-800 rounded-lg border border-gray-700">
+            <div class="overflow-x-auto">
+              <table class="w-full text-left">
+                <thead class="bg-gray-700/50">
+                  <tr>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Order ID
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Date
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Customer ID
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Total
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Status
+                    </th>
+                    <th class="p-4 font-semibold text-sm text-gray-300">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="orders-table-body" class="divide-y divide-gray-700">
+                  <tr>
+                    <td colspan="6" class="p-8 text-center text-gray-400">
+                      Loading orders...
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <!-- Modal (No changes needed) -->
+    <div
+      id="order-details-modal"
+      class="fixed inset-0 bg-gray-900/80 flex items-center justify-center p-4 z-50 hidden"
+    >
+      <div
+        class="bg-gray-800 rounded-lg w-full max-w-2xl max-h-full overflow-y-auto"
+        id="modal-panel"
+      >
+        <div
+          class="flex justify-between items-center p-4 border-b border-gray-700"
+        >
+          <h3 class="text-lg font-semibold text-gray-100" id="modal-title">
+            Order Details
+          </h3>
+          <button
+            id="modal-close-button"
+            class="text-gray-400 hover:text-gray-200"
+          >
+            <svg
+              class="h-6 w-6"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M6 18L18 6M6 6l12 12"
+              />
+            </svg>
+          </button>
+        </div>
+        <div class="p-6"><div id="modal-products-content"></div></div>
+      </div>
+    </div>
+
+    <script>
+      // --- CONFIG & AUTH ---
+      const API_ROOT_URL = "http://localhost:3001";
+      const API_BASE_URL = `${API_ROOT_URL}`;
+      const token = localStorage.getItem("admin_token");
+      if (!token) window.location.href = "login.html";
+      document.getElementById("logout-button").addEventListener("click", () => {
+        localStorage.removeItem("admin_token");
+        window.location.href = "login.html";
+      });
+
+      // --- ELEMENTS ---
+      const tableBody = document.getElementById("orders-table-body");
+      const modal = document.getElementById("order-details-modal");
+      const modalTitle = document.getElementById("modal-title");
+      const modalProductsContent = document.getElementById(
+        "modal-products-content"
+      );
+      const modalCloseButton = document.getElementById("modal-close-button");
+
+      // --- DYNAMIC API CALLS ---
+      const fetchOrders = async () => {
+        try {
+          const response = await fetch(`${API_BASE_URL}/api/admin/orders`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
+          const orders = await response.json();
+          renderTable(orders);
+        } catch (error) {
+          console.error("Failed to fetch orders:", error);
+          tableBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-red-400">Error: Could not load orders. Is the API server running?</td></tr>`;
+        }
+      };
+
+      const fetchOrderDetails = async (orderId) => {
+        try {
+          const response = await fetch(
+            `${API_BASE_URL}/api/admin/orders/${orderId}`,
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          if (!response.ok)
+            throw new Error(`HTTP error! status: ${response.status}`);
+          const details = await response.json();
+          return details;
+        } catch (error) {
+          console.error(
+            `Failed to fetch details for order #${orderId}:`,
+            error
+          );
+          // Re-throw the error to be caught by the click handler
+          throw error;
+        }
+      };
+
+      // --- RENDERING LOGIC ---
+      const renderTable = (orders) => {
+        if (!orders || orders.length === 0) {
+          tableBody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-gray-400">No orders found in the database.</td></tr>`;
+          return;
+        }
+        tableBody.innerHTML = orders
+          .map(
+            (o) => `
+          <tr class="hover:bg-gray-700/50">
+            <td class="p-4 text-sm font-medium text-gray-200">#${o.id}</td>
+            <td class="p-4 text-sm text-gray-400">${new Date(
+              o.created_at
+            ).toLocaleDateString()}</td>
+            <td class="p-4 text-sm text-gray-400">${o.user_id}</td>
+            <td class="p-4 text-sm font-medium text-gray-200">$${(
+              o.total_amount_in_cents / 100
+            ).toFixed(2)}</td>
+            <td class="p-4 text-sm">
+              <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                o.status === "completed"
+                  ? "bg-green-500/10 text-green-400"
+                  : "bg-yellow-500/10 text-yellow-400"
+              }">
+                ${o.status.charAt(0).toUpperCase() + o.status.slice(1)}
+              </span>
+            </td>
+            <td class="p-4 text-sm">
+              <button class="text-primary hover:text-primary-hover font-medium view-details-link" data-order-id="${
+                o.id
+              }">View Details</button>
+            </td>
+          </tr>`
+          )
+          .join("");
+      };
+
+      const renderModalContent = (orderId, detailedItems) => {
+        modalTitle.textContent = `Details for Order #${orderId}`;
+        if (!detailedItems || detailedItems.length === 0) {
+          modalProductsContent.innerHTML = `<p class="text-gray-400">This order has no associated products.</p>`;
+          return;
+        }
+        const productsHtml = detailedItems
+          .map((item) => {
+            // Construct the full, absolute URL for the image
+            const fullImageUrl = `${API_ROOT_URL}/${
+              item.imageUrl || "assets/kit_images/custom.jpg"
+            }`;
+
+            return `
+                <div class="flex items-center gap-4 py-3">
+                    <img src="${fullImageUrl}" alt="${
+              item.productName
+            }" class="h-16 w-16 rounded-md object-cover bg-gray-700">
+                    <div class="flex-1">
+                    <p class="font-medium text-gray-200">${item.productName}</p>
+                    <p class="text-sm text-gray-400">Qty: ${item.quantity}</p>
+                    </div>
+                    <p class="text-gray-300 font-medium">$${(
+                      item.price_at_purchase_in_cents / 100
+                    ).toFixed(2)}</p>
+                </div>
+            `;
+          })
+          .join("");
+        modalProductsContent.innerHTML = `<div class="divide-y divide-gray-700">${productsHtml}</div>`;
+      };
+      // --- MODAL CONTROLS & EVENT LISTENERS ---
+      const openModal = () => modal.classList.remove("hidden");
+      const closeModal = () => modal.classList.add("hidden");
+
+      const handleViewDetailsClick = async (orderId) => {
+        openModal();
+        modalTitle.textContent = `Loading Order #${orderId}...`;
+        modalProductsContent.innerHTML = `<div class="text-center text-gray-400">Fetching details...</div>`;
+        try {
+          const details = await fetchOrderDetails(orderId);
+          renderModalContent(orderId, details);
+        } catch (error) {
+          modalProductsContent.innerHTML = `<div class="text-center text-red-400">Could not load order details.</div>`;
+        }
+      };
+
+      tableBody.addEventListener("click", (e) => {
+        const target = e.target.closest(".view-details-link");
+        if (target) {
+          e.preventDefault();
+          handleViewDetailsClick(target.dataset.orderId);
+        }
+      });
+      modalCloseButton.addEventListener("click", closeModal);
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) closeModal();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && !modal.classList.contains("hidden"))
+          closeModal();
+      });
+
+      // --- INITIALIZE ---
+      fetchOrders();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,162 @@
+[
+  {
+    "id": 1,
+    "name": "Argentina 2024 Away",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/argentina_24_away.avif",
+    "description": "The latest away jersey for the Argentinian national team.",
+    "type": "nation"
+  },
+  {
+    "id": 2,
+    "name": "Netherlands 1988 Retro",
+    "price_in_cents": 7499,
+    "image_url": "assets/kit_images/netherlands_retro_home.jpg",
+    "description": "A stunning recreation of one of the most iconic kits in football history. Worn by legends like Gullit, Van Basten, and Rijkaard during their victorious Euro 1988 campaign. A must-have for any true football romantic.",
+    "type": "nation"
+  },
+  {
+    "id": 3,
+    "name": "Mexico 2025 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/mexico_25_home.webp",
+    "description": "The new home kit for the Mexican national team, featuring a bold new design.",
+    "type": "nation"
+  },
+  {
+    "id": 4,
+    "name": "USA 1994 Away",
+    "price_in_cents": 7499,
+    "image_url": "assets/kit_images/usa_1994_away.jpg",
+    "description": "The iconic kit worn by the US national team during the 1994 World Cup.",
+    "type": "nation"
+  },
+  {
+    "id": 5,
+    "name": "USWNT 2025 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/uswnt_25_home.avif",
+    "description": "The latest home kit for the USWNT.",
+    "type": "nation"
+  },
+  {
+    "id": 6,
+    "name": "Custom Kit Builder",
+    "price_in_cents": 8999,
+    "image_url": "assets/kit_images/custom.jpg",
+    "description": "Design your own custom jersey with your name and number.",
+    "type": "custom"
+  },
+  {
+    "id": 7,
+    "name": "AC Milan 2022 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/ac_milan_2022_home.webp",
+    "description": "The home kit for AC Milan in the 2022 season.",
+    "type": "club"
+  },
+  {
+    "id": 8,
+    "name": "FC Barcelona 2009 Home",
+    "price_in_cents": 7499,
+    "image_url": "assets/kit_images/barca_2009_home.webp",
+    "description": "The home kit for FC Barcelona in the 2009 season, when they won the sextuple.",
+    "type": "club"
+  },
+  {
+    "id": 9,
+    "name": "Manchester City 2012 Home",
+    "price_in_cents": 7499,
+    "image_url": "assets/kit_images/man_city_2012_home.jpg",
+    "description": "The home kit for Manchester City in the 2012 season, when they won the league title in dramatic fashion.",
+    "type": "club"
+  },
+  {
+    "id": 10,
+    "name": "Real Madrid 2017 Away",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/real_madrid_2017_away.webp",
+    "description": "The away kit for Real Madrid in the 2017 season.",
+    "type": "club"
+  },
+  {
+    "id": 11,
+    "name": "Inter Miami 2025 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/inter_miami_25_home.avif",
+    "description": "The latest home kit for Inter Miami.",
+    "type": "club"
+  },
+  {
+    "id": 12,
+    "name": "LAFC 2025 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/lafc_home_25.avif",
+    "description": "The latest home kit for LAFC.",
+    "type": "club"
+  },
+  {
+    "id": 13,
+    "name": "Liverpool 2025 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/liverpool_home_25.jpg",
+    "description": "The latest home kit for Liverpool.",
+    "type": "club"
+  },
+  {
+    "id": 14,
+    "name": "Bayern Munich 2025 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/bayern_25_home.avif",
+    "description": "The latest home kit for Bayern Munich.",
+    "type": "club"
+  },
+  {
+    "id": 15,
+    "name": "FC Barcelona 2025 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/barca_home_25.webp",
+    "description": "The latest home kit for FC Barcelona.",
+    "type": "club"
+  },
+  {
+    "id": 16,
+    "name": "Real Madrid 2026 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/real_madrid_home_26.avif",
+    "description": "The latest home kit for Real Madrid.",
+    "type": "club"
+  },
+  {
+    "id": 17,
+    "name": "Manchester City 2025 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/man_city_25_home.avif",
+    "description": "The latest home kit for Manchester City.",
+    "type": "club"
+  },
+  {
+    "id": 18,
+    "name": "Germany 1990 Retro",
+    "price_in_cents": 7499,
+    "image_url": "assets/kit_images/germany_retro.webp",
+    "description": "The iconic kit worn by Germany during their 1990 World Cup victory.",
+    "type": "nation"
+  },
+  {
+    "id": 19,
+    "name": "France 2018 Home",
+    "price_in_cents": 6999,
+    "image_url": "assets/kit_images/france_2018_home.webp",
+    "description": "The home kit for the French national team that won the 2018 World Cup.",
+    "type": "nation"
+  },
+  {
+    "id": 20,
+    "name": "Brazil 2002 Home",
+    "price_in_cents": 7499,
+    "image_url": "assets/kit_images/brazil_2002_home.webp",
+    "description": "The home kit for the Brazilian national team that won the 2002 World Cup.",
+    "type": "nation"
+  }
+]

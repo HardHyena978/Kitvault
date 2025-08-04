@@ -1,0 +1,136 @@
+=<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - KitVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontFamily: { sans: ["Inter", "sans-serif"] },
+            colors: {
+              primary: { DEFAULT: "#3b82f6", hover: "#2563eb" },
+              gray: {
+                900: "#111827",
+                800: "#1f2937",
+                700: "#374151",
+                400: "#9ca3af",
+                200: "#e5e7eb",
+                100: "#f3f4f6",
+              },
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-gray-900 text-gray-200 antialiased">
+    <main class="flex items-center justify-center min-h-screen px-4">
+      <div class="w-full max-w-md">
+        <div
+          class="bg-gray-800 p-8 rounded-lg shadow-2xl text-center border border-gray-700"
+        >
+          <div class="flex items-center justify-center gap-3 mb-6">
+            <svg
+              class="h-7 w-7 text-primary"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke-width="1.5"
+              stroke="currentColor"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M9 12.75 11.25 15 15 9.75m-3-7.036A11.956 11.956 0 0 1 12 3c5.523 0 10 4.477 10 10s-4.477 10-10 10S2 17.523 2 12c0-1.604.328-3.136.92-4.562"
+              />
+            </svg>
+            <h1 class="text-2xl font-semibold text-gray-100">KitVault Admin</h1>
+          </div>
+          <h2 class="text-xl font-bold text-gray-100">
+            Sign In to Your Account
+          </h2>
+
+          <form id="login-form" class="space-y-6 text-left mt-6">
+            <div>
+              <label for="email" class="font-medium text-sm text-gray-400"
+                >Email Address</label
+              >
+              <input
+                type="email"
+                id="email"
+                required
+                class="mt-2 w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              />
+            </div>
+            <div>
+              <label for="password" class="font-medium text-sm text-gray-400"
+                >Password</label
+              >
+              <input
+                type="password"
+                id="password"
+                required
+                class="mt-2 w-full px-4 py-2.5 bg-gray-900 border border-gray-700 rounded-md focus:ring-2 focus:ring-primary focus:outline-none"
+              />
+            </div>
+            <p
+              id="error-message"
+              class="text-red-400 text-sm hidden text-center"
+            ></p>
+            <button
+              type="submit"
+              id="submit-button"
+              class="w-full bg-primary font-semibold text-white py-2.5 px-6 rounded-lg hover:bg-primary-hover transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+            >
+              Sign In
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+    <script>
+      document
+        .getElementById("login-form")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+          const email = document.getElementById("email").value;
+          const password = document.getElementById("password").value;
+          const errorMessage = document.getElementById("error-message");
+          const submitButton = document.getElementById("submit-button");
+
+          submitButton.disabled = true;
+          submitButton.textContent = "Signing In...";
+          errorMessage.classList.add("hidden");
+
+          try {
+            const response = await fetch(
+              "http://localhost:3001/api/auth/login",
+              {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email, password }),
+              }
+            );
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.msg || "Login failed.");
+
+            localStorage.setItem("admin_token", data.token);
+            window.location.href = "dashboard.html";
+          } catch (error) {
+            errorMessage.textContent = error.message;
+            errorMessage.classList.remove("hidden");
+            submitButton.disabled = false;
+            submitButton.textContent = "Sign In";
+          }
+        });
+    </script>
+  </body>
+</html>

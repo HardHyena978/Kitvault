@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KitVault - Retro, Current & Custom Soccer Jerseys</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Using a more modern, clean font like Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+
+    <script>
+      // Add this inside the <script> tag with your tailwind.config
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              primary: "#2563eb",
+            },
+            // ADD THIS for text-shadow
+            textShadow: {
+              DEFAULT: "1px 1px 3px rgb(0 0 0 / 0.4)",
+              sm: "1px 1px 2px rgb(0 0 0 / 0.3)",
+              md: "2px 2px 5px rgb(0 0 0 / 0.4)",
+            },
+          },
+        },
+        // ADD THIS PLUGIN to make the utility work
+        plugins: [
+          function ({ addUtilities, theme, e }) {
+            const utilities = Object.entries(theme("textShadow")).map(
+              ([key, value]) => {
+                return {
+                  [`.${e(`text-shadow${key === "DEFAULT" ? "" : `-${key}`}`)}`]:
+                    {
+                      textShadow: value,
+                    },
+                };
+              }
+            );
+            addUtilities(utilities);
+          },
+        ],
+      };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      /* Add this inside your <style> tag in the <head> */
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px) scale(0.98);
+          filter: blur(5px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) scale(1);
+          filter: blur(0);
+        }
+      }
+
+      .animate-fadeInUp {
+        animation: fadeInUp 1.2s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+      }
+
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .animate-bounce-slow {
+        animation: bounce 2s infinite;
+      }
+    </style>
+  </head>
+  <!-- UPDATED: Switched to a pure white background for ultimate minimalism -->
+  <!-- Start of the corrected body -->
+  <body class="bg-white text-slate-700 overflow-hidden">
+    <!-- Skip to Content Link -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 top-4 left-4 px-4 py-2 bg-white shadow-lg rounded-lg"
+    >
+      Skip to main content
+    </a>
+
+    <!-- Loading Spinner -->
+    <div
+      id="loading-spinner"
+      class="fixed inset-0 flex items-center justify-center bg-white z-50 transition-opacity duration-500"
+    >
+      <div
+        class="animate-spin rounded-full h-24 w-24 border-t-2 border-b-2 border-slate-900"
+      ></div>
+    </div>
+
+    <!-- Header -->
+    <header
+      id="main-header"
+      class="bg-white/90 backdrop-blur-sm fixed top-0 left-0 right-0 z-40 transition-colors duration-300"
+    >
+      <nav
+        class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-slate-900">
+          <img
+            class="object-contain h-9"
+            src="assets/logo_horizontal.png"
+            alt="KITVAULT"
+          />
+        </a>
+        <!-- Desktop Navigation -->
+        <div class="hidden md:flex space-x-6 items-center">
+          <a
+            href="all-items.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >All Kits</a
+          >
+          <a
+            href="retro-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Retro</a
+          >
+          <a
+            href="current-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Current</a
+          >
+          <a
+            href="concept-jerseys.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Concepts</a
+          >
+          <a
+            href="orders.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Orders</a
+          >
+          <a
+            href="cart.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium relative"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              />
+            </svg>
+            <span
+              id="cart-count"
+              class="absolute -top-1 -right-2 bg-primary text-white text-[10px] font-semibold rounded-full h-4 w-4 flex items-center justify-center"
+              >0</span
+            >
+          </a>
+          <div id="auth-links" class="flex items-center gap-x-4"></div>
+        </div>
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+          <button
+            id="mobile-menu-button"
+            class="text-slate-900 focus:outline-none"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- CORRECTED Mobile Menu -->
+    <div
+      id="mobile-menu"
+      class="md:hidden fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 hidden transition-transform duration-300 ease-in-out transform translate-x-full"
+    >
+      <div class="flex justify-end p-6">
+        <button id="close-mobile-menu" class="text-white focus:outline-none">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <nav
+        class="flex flex-col items-center justify-center h-full space-y-8 text-xl text-white -mt-16"
+      >
+        <a
+          href="all-items.html"
+          class="hover:text-primary transition duration-300"
+          >All Kits</a
+        >
+        <a
+          href="retro-kits.html"
+          class="hover:text-primary transition duration-300"
+          >Retro</a
+        >
+        <a
+          href="current-kits.html"
+          class="hover:text-primary transition duration-300"
+          >Current</a
+        >
+        <a
+          href="concept-jerseys.html"
+          class="hover:text-primary transition duration-300"
+          >Concepts</a
+        >
+        <a href="orders.html" class="hover:text-primary transition duration-300"
+          >Orders</a
+        >
+        <a
+          href="cart.html"
+          class="hover:text-primary transition duration-300 relative"
+          >Cart
+          <span
+            id="mobile-cart-count"
+            class="absolute -top-2 -right-3 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+            >0</span
+          ></a
+        >
+        <div
+          id="mobile-auth-links"
+          class="flex flex-col items-center space-y-8 pt-4"
+        ></div>
+      </nav>
+    </div>
+
+    <main id="main-content">
+      <!-- Luxurious Hero Section -->
+      <section
+        class="relative h-screen flex flex-col items-center justify-center text-center text-white bg-cover bg-center"
+        style="background-image: url('assets/landing.webp')"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-black/20"
+        ></div>
+        <div class="relative z-10 px-4 flex flex-col items-center">
+          <h1
+            class="text-6xl md:text-8xl font-bold leading-tight mb-4 opacity-0 animate-fadeInUp text-shadow-md"
+            style="animation-delay: 200ms"
+          >
+            Wear The Legacy
+          </h1>
+          <p
+            class="text-lg md:text-xl text-slate-100 mb-10 max-w-2xl mx-auto opacity-0 animate-fadeInUp text-shadow"
+            style="animation-delay: 600ms"
+          >
+            From iconic retro kits to modern masterpieces, find the jerseys that
+            define the beautiful game.
+          </p>
+          <a
+            href="#collections"
+            class="border-2 border-white text-white font-semibold px-10 py-3 rounded-lg text-lg transition-all duration-300 hover:bg-white/10 backdrop-blur-sm opacity-0 animate-fadeInUp"
+            style="animation-delay: 1000ms"
+          >
+            Explore Collections
+          </a>
+        </div>
+        <div
+          class="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 opacity-0 animate-fadeInUp"
+          style="animation-delay: 1500ms"
+        >
+          <a href="#collections" class="animate-bounce-slow">
+            <svg
+              class="w-6 h-6 text-white"
+              fill="none"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      <!-- UPDATED: Simplified, stacked collections for a cleaner, more focused layout -->
+      <!-- UPDATED: Collections section with a modern, alternating layout -->
+      <section id="collections" class="py-20 md:py-28 bg-white">
+        <div class="container mx-auto px-6">
+          <div class="text-center" data-aos="fade-up">
+            <h2 class="text-3xl md:text-4xl font-bold text-slate-900">
+              Our Collections
+            </h2>
+            <p class="mt-2 text-lg text-slate-600 max-w-2xl mx-auto">
+              Iconic kits from every era, curated for the modern fan.
+            </p>
+          </div>
+
+          <div class="mt-16 md:mt-20 space-y-20 md:space-y-24">
+            <!-- Collection 1: Retro Kits (Image Left) -->
+            <a
+              href="retro-kits.html"
+              class="group grid grid-cols-1 md:grid-cols-2 items-center gap-12"
+              data-aos="fade-up"
+            >
+              <div class="h-96 w-full rounded-lg overflow-hidden shadow-xl">
+                <img
+                  src="assets/retro.jpg"
+                  alt="A classic retro soccer jersey."
+                  class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="text-center md:text-left">
+                <h3 class="text-2xl md:text-3xl font-semibold text-slate-900">
+                  Retro Kits
+                </h3>
+                <p class="mt-2 text-slate-600">
+                  Timeless classics reborn. Relive the moments of glory with
+                  iconic jerseys from football's golden ages.
+                </p>
+                <span
+                  class="mt-4 inline-block font-semibold text-primary group-hover:underline"
+                >
+                  Shop Retro →
+                </span>
+              </div>
+            </a>
+
+            <!-- Collection 2: Current Kits (Image Right) -->
+            <a
+              href="current-kits.html"
+              class="group grid grid-cols-1 md:grid-cols-2 items-center gap-12"
+              data-aos="fade-up"
+            >
+              <div
+                class="h-96 w-full rounded-lg overflow-hidden shadow-xl md:order-last"
+              >
+                <img
+                  src="assets/current.jpg"
+                  alt="A current season soccer jersey."
+                  class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="text-center md:text-left">
+                <h3 class="text-2xl md:text-3xl font-semibold text-slate-900">
+                  Current Kits
+                </h3>
+                <p class="mt-2 text-slate-600">
+                  Wear this season's pride. The latest official and fan jerseys
+                  from the world's biggest clubs and nations.
+                </p>
+                <span
+                  class="mt-4 inline-block font-semibold text-primary group-hover:underline"
+                >
+                  Shop Current →
+                </span>
+              </div>
+            </a>
+
+            <!-- Collection 3: Custom Kits (Image Left) -->
+            <a
+              href="custom-kit.html"
+              class="group grid grid-cols-1 md:grid-cols-2 items-center gap-12"
+              data-aos="fade-up"
+            >
+              <div class="h-96 w-full rounded-lg overflow-hidden shadow-xl">
+                <img
+                  src="assets/custom.webp"
+                  alt="A customized soccer jersey with a name and number."
+                  class="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-105"
+                  loading="lazy"
+                />
+              </div>
+              <div class="text-center md:text-left">
+                <h3 class="text-2xl md:text-3xl font-semibold text-slate-900">
+                  Custom Kits
+                </h3>
+                <p class="mt-2 text-slate-600">
+                  Your jersey, your way. Add a custom name, number, and patches
+                  to create a truly personal piece.
+                </p>
+                <span
+                  class="mt-4 inline-block font-semibold text-primary group-hover:underline"
+                >
+                  Shop Custom →
+                </span>
+              </div>
+            </a>
+          </div>
+        </div>
+      </section>
+      <section id="new-arrivals" class="py-20 md:py-28 bg-slate-50">
+        <div class="container mx-auto px-6">
+          <h2
+            class="text-3xl font-bold text-center mb-12 text-slate-900"
+            data-aos="fade-up"
+          >
+            Fresh Off The Press
+          </h2>
+          <div
+            id="new-arrivals-grid"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            <!-- Product cards will be loaded here by JS -->
+          </div>
+        </div>
+      </section>
+
+      <section
+        id="custom"
+        class="relative py-24 bg-cover bg-center bg-fixed"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1551854388-335a09c73a62?q=80&w=2940&auto=format&fit=crop');
+        "
+      >
+        <div class="absolute inset-0 bg-slate-900/70"></div>
+        <div
+          class="relative container mx-auto px-6 text-center text-white"
+          data-aos="fade-in"
+        >
+          <h2 class="text-3xl md:text-4xl font-bold mb-4">
+            Design Your Own Legacy
+          </h2>
+          <p class="text-slate-300 text-lg mb-8 max-w-2xl mx-auto">
+            Add your name, number, or patches to create a one-of-a-kind jersey
+            that's truly yours.
+          </p>
+          <a
+            href="all-items.html"
+            class="bg-white text-slate-900 font-semibold px-8 py-3 rounded-lg text-lg hover:bg-slate-200 transition-all duration-300 transform hover:scale-105 inline-block focus:outline-none focus:ring-4 focus:ring-slate-300"
+          >
+            Start Customizing
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <footer id="contact" class="bg-slate-100">
+      <div class="container mx-auto px-6 py-12">
+        <div class="text-center">
+          <a href="#" class="flex justify-center">
+            <img src="assets/logo_horizontal.png" alt="KITVAULT" class="h-10" />
+          </a>
+          <div class="flex justify-center space-x-6 mt-6">
+            <a
+              href="contact.html"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Contact</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Facebook</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Instagram</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Twitter/X</a
+            >
+          </div>
+          <p class="mt-8 text-slate-500 text-sm">
+            © 2025 KitVault. All Rights Reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Cart count update logic remains the same
+      const updateCartCount = () => {
+        const cart = JSON.parse(localStorage.getItem("cart")) || [];
+        const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+        const cartCountSpan = document.getElementById("cart-count");
+        const mobileCartCountSpan =
+          document.getElementById("mobile-cart-count");
+
+        if (cartCountSpan) cartCountSpan.textContent = cartCount;
+        if (mobileCartCountSpan) mobileCartCountSpan.textContent = cartCount;
+      };
+
+      document.addEventListener("DOMContentLoaded", () => {
+        const loadingSpinner = document.getElementById("loading-spinner");
+        const body = document.body;
+
+        setTimeout(() => {
+          loadingSpinner.style.opacity = "0";
+          setTimeout(() => {
+            loadingSpinner.style.display = "none";
+            body.classList.remove("overflow-hidden");
+          }, 500);
+        }, 500);
+
+        updateCartCount();
+        const newArrivalsGrid = document.getElementById("new-arrivals-grid");
+
+        fetch("http://localhost:3001/api/products")
+          .then((response) => response.json())
+          .then((products) => {
+            if (newArrivalsGrid) {
+              newArrivalsGrid.innerHTML = "";
+              products.slice(0, 3).forEach((product, index) => {
+                const productCardHTML = `
+                <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-1 transition-all duration-300 hover:shadow-xl" 
+                     data-aos="fade-up" 
+                     data-aos-delay="${index * 100}">
+                    <a href="product.html?id=${
+                      product.id
+                    }" class="block h-72 overflow-hidden">
+                        <img src="${product.image_url}" alt="${
+                  product.name
+                }" class="w-full h-full object-cover transition-transform duration-300 ease-in-out hover:scale-105" loading="lazy">
+                    </a>
+                    <div class="p-6">
+                        <h3 class="text-lg font-semibold mb-1 text-slate-900">
+                            <a href="product.html?id=${
+                              product.id
+                            }" class="hover:text-primary transition-colors">${
+                  product.name
+                }</a>
+                        </h3>
+                        <p class="text-base font-bold text-slate-800 mb-4">$${(
+                          product.price_in_cents / 100
+                        ).toFixed(2)}</p>
+                        <a href="product.html?id=${
+                          product.id
+                        }" class="w-full text-center block bg-slate-800 text-white font-semibold py-2.5 rounded-lg hover:bg-slate-900 transition-colors duration-300">View Product</a>
+                    </div>
+                </div>
+              `;
+                newArrivalsGrid.innerHTML += productCardHTML;
+              });
+            }
+          })
+          .catch((error) => {
+            if (newArrivalsGrid) {
+              newArrivalsGrid.innerHTML = `<p class="text-slate-500 text-center col-span-full">Could not load new arrivals. Please try again later.</p>`;
+            }
+            console.error("Error fetching products:", error);
+          });
+      });
+    </script>
+    <script>
+      AOS.init({
+        once: true,
+        duration: 800,
+        easing: "ease-in-out",
+      });
+    </script>
+    <script>
+      // All other scripts (auth.js, mobile menu, header scroll) can be simplified
+      // as they are already quite clean. This script handles the core UI.
+      document.addEventListener("DOMContentLoaded", () => {
+        const header = document.getElementById("main-header");
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const closeMobileMenuButton =
+          document.getElementById("close-mobile-menu");
+        const mobileMenu = document.getElementById("mobile-menu");
+
+        window.addEventListener("scroll", () => {
+          header.classList.toggle("bg-white", window.scrollY > 50);
+          header.classList.toggle("bg-white/90", window.scrollY <= 50);
+        });
+
+        mobileMenuButton.addEventListener("click", () => {
+          mobileMenu.classList.remove("hidden", "translate-x-full");
+          mobileMenu.classList.add("translate-x-0");
+        });
+
+        closeMobileMenuButton.addEventListener("click", () => {
+          mobileMenu.classList.add("translate-x-full");
+          setTimeout(() => mobileMenu.classList.add("hidden"), 300);
+        });
+
+        // Auth links logic can be kept in its own auth.js file for separation of concerns
+      });
+    </script>
+    <!-- It's good practice to keep auth logic in its own file -->
+    <script src="auth.js"></script>
+  </body>
+</html>

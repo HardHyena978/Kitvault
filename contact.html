@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact Us - KitVault</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ["Inter", "sans-serif"],
+            },
+            colors: {
+              primary: "#2563eb",
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body class="bg-white text-slate-700">
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:z-50 top-4 left-4 px-4 py-2 bg-white shadow-lg rounded-lg"
+    >
+      Skip to main content
+    </a>
+
+    <!-- Consistent Header -->
+    <header
+      id="main-header"
+      class="bg-white/90 backdrop-blur-sm shadow-sm sticky top-0 left-0 right-0 z-40 transition-colors duration-300"
+    >
+      <nav
+        class="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center"
+      >
+        <a href="index.html" class="text-2xl font-bold text-slate-900">
+          <img
+            class="object-contain h-9"
+            src="assets/logo_horizontal.png"
+            alt="KITVAULT"
+          />
+        </a>
+        <div class="hidden md:flex space-x-6 items-center">
+          <a
+            href="all-items.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >All Kits</a
+          >
+          <a
+            href="retro-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Retro</a
+          >
+          <a
+            href="current-kits.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Current</a
+          >
+          <a
+            href="concept-jerseys.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Concepts</a
+          >
+          <a
+            href="orders.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium"
+            >Orders</a
+          >
+          <a
+            href="cart.html"
+            class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium relative"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+              stroke-width="1.5"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"
+              />
+            </svg>
+            <span
+              id="cart-count"
+              class="absolute -top-1 -right-2 bg-primary text-white text-[10px] font-semibold rounded-full h-4 w-4 flex items-center justify-center"
+              >0</span
+            >
+          </a>
+          <div id="auth-links" class="flex items-center gap-x-4"></div>
+        </div>
+        <div class="md:hidden flex items-center">
+          <button
+            id="mobile-menu-button"
+            class="text-slate-900 focus:outline-none"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Mobile Menu HTML -->
+    <div
+      id="mobile-menu"
+      class="md:hidden fixed inset-0 bg-slate-900/95 backdrop-blur-sm z-50 hidden transition-transform duration-300 ease-in-out transform translate-x-full"
+    >
+      <div class="flex justify-end p-6">
+        <button id="close-mobile-menu" class="text-white focus:outline-none">
+          <svg
+            class="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </button>
+      </div>
+      <nav
+        class="flex flex-col items-center justify-center h-full space-y-8 text-xl text-white -mt-16"
+      >
+        <a
+          href="all-items.html"
+          class="hover:text-primary transition duration-300"
+          >All Kits</a
+        >
+        <a
+          href="retro-kits.html"
+          class="hover:text-primary transition duration-300"
+          >Retro</a
+        >
+        <a
+          href="current-kits.html"
+          class="hover:text-primary transition duration-300"
+          >Current</a
+        >
+        <a
+          href="concept-jerseys.html"
+          class="hover:text-primary transition duration-300"
+          >Concepts</a
+        >
+        <a href="orders.html" class="hover:text-primary transition duration-300"
+          >Orders</a
+        >
+        <a
+          href="cart.html"
+          class="hover:text-primary transition duration-300 relative"
+          >Cart
+          <span
+            id="mobile-cart-count"
+            class="absolute -top-2 -right-3 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center"
+            >0</span
+          ></a
+        >
+        <div
+          id="mobile-auth-links"
+          class="flex flex-col items-center space-y-8 pt-4"
+        ></div>
+      </nav>
+    </div>
+
+    <main id="main-content">
+      <!-- Modern Hero Section -->
+      <section class="bg-slate-50 pt-32 pb-16">
+        <div class="container mx-auto px-6 text-center">
+          <h1 class="text-5xl font-bold text-slate-900">Get In Touch</h1>
+          <p class="text-lg text-slate-600 mt-2 max-w-2xl mx-auto">
+            Have a question or feedback? We'd love to hear from you. Let us know
+            how we can help.
+          </p>
+        </div>
+      </section>
+
+      <!-- Main Content Section -->
+      <section class="py-20">
+        <div class="container mx-auto px-6">
+          <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+            <!-- Contact Form Card -->
+            <div class="bg-white p-8 rounded-lg shadow-lg">
+              <h2 class="text-2xl font-bold text-slate-900 mb-6">
+                Send Us a Message
+              </h2>
+
+              <!-- CORRECTED FORM: Added id="contact-form" -->
+              <form id="contact-form" class="space-y-6">
+                <div>
+                  <label for="name" class="font-semibold text-slate-700"
+                    >Full Name</label
+                  >
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    class="mt-2 w-full px-4 py-3 border border-slate-200 bg-slate-100 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition"
+                    placeholder="Your Name"
+                  />
+                </div>
+                <div>
+                  <label for="email" class="font-semibold text-slate-700"
+                    >Email Address</label
+                  >
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    class="mt-2 w-full px-4 py-3 border border-slate-200 bg-slate-100 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition"
+                    placeholder="you@example.com"
+                  />
+                </div>
+                <div>
+                  <label for="message" class="font-semibold text-slate-700"
+                    >Message</label
+                  >
+                  <textarea
+                    id="message"
+                    name="message"
+                    rows="5"
+                    required
+                    class="mt-2 w-full px-4 py-3 border border-slate-200 bg-slate-100 rounded-lg focus:ring-2 focus:ring-primary focus:outline-none transition"
+                    placeholder="How can we help you?"
+                  ></textarea>
+                </div>
+
+                <div id="form-message" class="text-sm text-center hidden"></div>
+
+                <div>
+                  <button
+                    type="submit"
+                    id="submit-button"
+                    class="w-full bg-slate-900 text-white font-bold py-3.5 px-6 rounded-lg text-lg hover:bg-slate-700 transition-all duration-300 transform hover:scale-[1.02] disabled:opacity-70"
+                  >
+                    Send Message
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Contact Info & Map Card -->
+            <div class="space-y-8">
+              <div class="bg-white p-8 rounded-lg shadow-lg">
+                <h3 class="text-2xl font-bold text-slate-900 mb-4">
+                  Contact Information
+                </h3>
+                <div class="space-y-4 text-slate-600">
+                  <p class="flex items-center">
+                    <svg
+                      class="w-5 h-5 mr-3 text-slate-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"
+                      />
+                    </svg>
+                    contact@kitvault.com
+                  </p>
+                  <p class="flex items-center">
+                    <svg
+                      class="w-5 h-5 mr-3 text-slate-400"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke-width="1.5"
+                      stroke="currentColor"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"
+                      />
+                    </svg>
+                    123 Football Lane, Los Angeles, CA 90210
+                  </p>
+                </div>
+              </div>
+              <div class="rounded-lg shadow-lg overflow-hidden">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d423284.0441991083!2d-118.74139202144572!3d34.02060239232479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x80c2c75ddc27da13%3A0xe22fdf6f254608f4!2sLos%20Angeles%2C%20CA!5e0!3m2!1sen!2sus!4v1721527749420!5m2!1sen!2sus"
+                  width="100%"
+                  height="450"
+                  style="border: 0"
+                  allowfullscreen=""
+                  loading="lazy"
+                  referrerpolicy="no-referrer-when-downgrade"
+                >
+                </iframe>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Consistent Footer -->
+    <footer id="contact-info" class="bg-slate-50 border-t border-slate-100">
+      <div class="container mx-auto px-6 py-12">
+        <div class="text-center">
+          <a href="index.html" class="flex justify-center">
+            <img src="assets/logo_horizontal.png" alt="KITVAULT" class="h-10" />
+          </a>
+          <div class="flex justify-center space-x-6 mt-6">
+            <a href="contact.html" class="text-primary font-semibold"
+              >Contact</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Facebook</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Instagram</a
+            >
+            <a
+              href="#"
+              class="text-slate-600 hover:text-primary transition-colors"
+              >Twitter/X</a
+            >
+          </div>
+          <p class="mt-8 text-slate-500 text-sm">
+            © 2025 KitVault. All Rights Reserved.
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- CONSOLIDATED JAVASCRIPT BLOCK -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        // --- 1. STANDARD UI FUNCTIONS ---
+        const handleHeaderScroll = () => {
+          const header = document.getElementById("main-header");
+          if (!header) return;
+          window.addEventListener("scroll", () => {
+            header.classList.toggle("bg-white", window.scrollY > 50);
+            header.classList.toggle("bg-white/90", window.scrollY <= 50);
+          });
+        };
+
+        const initMobileMenu = () => {
+          const mobileMenuButton =
+            document.getElementById("mobile-menu-button");
+          const closeMobileMenuButton =
+            document.getElementById("close-mobile-menu");
+          const mobileMenu = document.getElementById("mobile-menu");
+          if (!mobileMenuButton || !closeMobileMenuButton || !mobileMenu)
+            return;
+
+          mobileMenuButton.addEventListener("click", () => {
+            mobileMenu.classList.remove("hidden");
+            requestAnimationFrame(() => {
+              mobileMenu.classList.remove("translate-x-full");
+            });
+          });
+          closeMobileMenuButton.addEventListener("click", () => {
+            mobileMenu.classList.add("translate-x-full");
+            setTimeout(() => mobileMenu.classList.add("hidden"), 300);
+          });
+        };
+
+        const updateCartCount = () => {
+          const cart = JSON.parse(localStorage.getItem("cart")) || [];
+          const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+          const cartCountSpan = document.getElementById("cart-count");
+          const mobileCartCountSpan =
+            document.getElementById("mobile-cart-count");
+          if (cartCountSpan) cartCountSpan.textContent = cartCount;
+          if (mobileCartCountSpan) mobileCartCountSpan.textContent = cartCount;
+        };
+
+        const initAuth = () => {
+          const token = localStorage.getItem("token");
+          const authLinksContainer = document.getElementById("auth-links");
+          const mobileAuthLinksContainer =
+            document.getElementById("mobile-auth-links");
+          if (!authLinksContainer || !mobileAuthLinksContainer) return;
+
+          const logout = (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            window.location.href = "index.html";
+          };
+
+          if (token) {
+            authLinksContainer.innerHTML = `<a href="#" id="logout-button" class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium">Logout</a>`;
+            document
+              .getElementById("logout-button")
+              .addEventListener("click", logout);
+            mobileAuthLinksContainer.innerHTML = `<a href="#" id="mobile-logout-button" class="hover:text-primary transition duration-300">Logout</a>`;
+            document
+              .getElementById("mobile-logout-button")
+              .addEventListener("click", logout);
+          } else {
+            authLinksContainer.innerHTML = `
+              <a href="login.html" class="text-slate-600 hover:text-primary transition-colors duration-200 font-medium">Login</a>
+              <a href="register.html" class="bg-slate-800 text-white font-semibold px-4 py-2 rounded-lg hover:bg-slate-900 transition-colors duration-300">Register</a>`;
+            mobileAuthLinksContainer.innerHTML = `
+              <a href="login.html" class="hover:text-primary transition duration-300">Login</a>
+              <a href="register.html" class="bg-white text-slate-800 font-semibold px-6 py-2 rounded-lg hover:bg-slate-200 transition-colors duration-300">Register</a>`;
+          }
+        };
+
+        // --- 2. CONTACT FORM SPECIFIC LOGIC ---
+        const contactForm = document.getElementById("contact-form");
+        const submitButton = document.getElementById("submit-button");
+        const formMessage = document.getElementById("form-message");
+
+        const handleContactSubmit = async (e) => {
+          e.preventDefault();
+
+          submitButton.disabled = true;
+          submitButton.textContent = "Sending...";
+          formMessage.className = "text-sm text-center text-slate-500 block";
+          formMessage.textContent = "Please wait...";
+
+          const formData = new FormData(contactForm);
+          const data = Object.fromEntries(formData.entries());
+
+          try {
+            const response = await fetch("http://localhost:3001/api/contact", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              formMessage.className =
+                "text-sm text-center text-green-600 block";
+              formMessage.textContent = result.msg;
+              contactForm.reset();
+            } else {
+              throw new Error(result.msg || "An unknown error occurred.");
+            }
+          } catch (error) {
+            formMessage.className = "text-sm text-center text-red-500 block";
+            formMessage.textContent =
+              error.message || "A network error occurred.";
+          } finally {
+            submitButton.disabled = false;
+            submitButton.textContent = "Send Message";
+          }
+        };
+
+        if (contactForm) {
+          contactForm.addEventListener("submit", handleContactSubmit);
+        }
+
+        // --- 3. INITIALIZATION ---
+        const init = () => {
+          handleHeaderScroll();
+          initMobileMenu();
+          updateCartCount();
+          initAuth();
+        };
+
+        init();
+      });
+    </script>
+  </body>
+</html>
