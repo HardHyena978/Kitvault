@@ -6,8 +6,6 @@ KitVault is a complete, full-stack e-commerce web application for a fictional so
 
 ![KitVault Homepage](https://i.postimg.cc/1RkL7m5w/localhost-5500-index-html.png)
 
-_Replace this with a screenshot of the actual application homepage._
-
 ## Key Features
 
 - **Modern Frontend**: A responsive and beautifully designed user interface built with HTML5, and Tailwind CSS.
