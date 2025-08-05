@@ -2,6 +2,12 @@
 
 KitVault is a complete, full-stack e-commerce web application for a fictional soccer jersey store. It features a clean, modern user interface, secure user authentication, product browsing with advanced filtering, a fully integrated Stripe checkout process, and automated email confirmations.
 
+## Screenshot
+
+![KitVault Homepage](https://i.postimg.cc/1RkL7m5w/localhost-5500-index-html.png)
+
+_Replace this with a screenshot of the actual application homepage._
+
 ## Key Features
 
 - **Modern Frontend**: A responsive and beautifully designed user interface built with HTML5, and Tailwind CSS.
@@ -12,14 +18,11 @@ KitVault is a complete, full-stack e-commerce web application for a fictional so
 - **Order History**: Logged-in users can view a detailed history of their past orders.
 - **Automated Email Confirmations**: Uses the Resend API to send transactional order confirmation emails upon successful payment.
 - **RESTful Backend API**: A robust backend built with Node.js, Express, and PostgreSQL to manage products, users, and orders.
+- **Admin Panel**: A secure admin dashboard to manage products (add, update, delete), view all user accounts, and track customer orders.
 
 ## Technology Stack
 
-- **Frontend**: HTML5, Tailwind CSS, Vanilla JavaScript
-- **Backend**: Node.js, Express.js
-- **Database**: PostgreSQL
-- **Payments**: Stripe
-- **Email**: Resend
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white) ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white) ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black) ![Node.js](https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white) ![Express.js](https://img.shields.io/badge/Express.js-000000?style=for-the-badge&logo=express&logoColor=white) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-336791?style=for-the-badge&logo=postgresql&logoColor=white) ![Stripe](https://img.shields.io/badge/Stripe-626CD9?style=for-the-badge&logo=stripe&logoColor=white) ![Resend](https://img.shields.io/badge/Resend-4F4F4F?style=for-the-badge)
 
 ## Getting Started
 
