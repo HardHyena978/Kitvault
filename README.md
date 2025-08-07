@@ -59,14 +59,14 @@ Follow these instructions to get a copy of the project up and running on your lo
     - Create a new database named `kitvault_db`.
     - Connect to your new database and run the SQL commands found in a schema file (e.g., `outputfile.sql`) to create the necessary tables (`users`, `products`, `orders`, `order_items`).
       
-    - Or, copy outputfile.sql into C:\Program Files\PostgreSQL\-v-\bin>
+    - Or, copy outputfile.sql into `C:\Program Files\PostgreSQL\-v-\bin>`
     - Navigate to SQL file
        ```bash
        cd C:\Program Files\PostgreSQL\-v-\bin
       ```
      - Import SQL to database
        ```bash
-      psql -h hostname -p port_number -U username -f outputfile.sql kitvault_db
+       psql -h hostname -p port_number -U username -f your_file.sql databasename 
       ```
 
 4.  **Run the Application:**
