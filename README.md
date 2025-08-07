@@ -68,9 +68,8 @@ Follow these instructions to get a copy of the project up and running on your lo
        ```bash
        psql -h hostname -p port_number -U username -f outputfile.sql kitvault_db
       ```
-      - Make sure to remember these values for the `.env` file.
 
-4.  **Run the Application:**
+5.  **Run the Application:**
     - **Start the backend server:**
       ```bash
       npm start
