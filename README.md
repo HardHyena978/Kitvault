@@ -56,8 +56,17 @@ Follow these instructions to get a copy of the project up and running on your lo
 3.  **Setup the Database:**
 
     - Make sure your PostgreSQL server is running.
-    - Create a new database (e.g., `kitvault_db`).
-    - Connect to your new database and run the SQL commands found in a schema file (e.g., `backend/database.sql`) to create the necessary tables (`users`, `products`, `orders`, `order_items`).
+    - Create a new database named `kitvault_db`.
+    - Connect to your new database and run the SQL commands found in a schema file (e.g., `outputfile.sql`) to create the necessary tables (`users`, `products`, `orders`, `order_items`).
+    - Or, copy outputfil.sql into C:\Program Files\PostgreSQL\-v-\bin>
+    - Navigate to SQL file
+       ```bash
+       cd C:\Program Files\PostgreSQL\-v-\bin
+      ```
+     - Import SQL to database
+       ```bash
+      psql -h hostname -p port_number -U username -f outputfile.sql kitvault_db
+      ```
 
 4.  **Run the Application:**
     - **Start the backend server:**
