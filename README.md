@@ -75,7 +75,7 @@ Follow these instructions to get a copy of the project up and running on your lo
       ```bash
       npm start
       ```
-      The server will be running on `http://localhost:3000`.
+      The server typically will be running on `http://localhost:3000`.
     - **Run the Frontend:**
       - Open the root `Store` folder in VS Code.
       - Right-click on `index.html` and select "Open with Live Server".
