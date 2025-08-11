@@ -2,6 +2,10 @@
 
 KitVault is a complete, full-stack e-commerce web application for a fictional soccer jersey store. It features a clean, modern user interface, secure user authentication, product browsing with advanced filtering, a fully integrated Stripe checkout process, and automated email confirmations.
 
+## Live Deployment
+
+[KitVault Live Deployment](https://kitvault.netlify.app/)
+
 ## Screenshot
 
 ![KitVault Homepage](https://i.postimg.cc/1RkL7m5w/localhost-5500-index-html.png)
