@@ -11,7 +11,7 @@ module.exports = (stripe) => {
 
   // --- CREATE CHECKOUT SESSION ROUTE ---
   // This route creates the Stripe session and redirects the user to the payment page.
-  router.post("/create-checkout-session", authMiddleware, async (req, res) => {
+  router.post("/create-checkout-session", express.json(), authMiddleware, async (req, res) => {
     const { cartItems } = req.body;
     let orderId;
 
