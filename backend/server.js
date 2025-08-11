@@ -48,6 +48,7 @@ app.post(
 // 2. GENERAL JSON PARSING AND BUFFER FIX
 // This applies to ALL other routes defined below.
 app.use(express.json());
+
 app.use((req, res, next) => {
   if (req.body instanceof Buffer && req.body.length > 0) {
     try {
