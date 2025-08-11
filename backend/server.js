@@ -45,11 +45,13 @@ app.use("/api/admin", adminMiddleware, adminRoutes);
 app.use("/assets", express.static(path.join(__dirname, "..", "assets")));
 
 app.use((req, res, next) => {
-  // We only care about requests that should have a body.
-  if (req.method === "POST" || req.method === "PUT") {
-    console.log("--- AFTER PARSING ---");
-    console.log("PARSED BODY:", req.body);
-    console.log("---------------------");
+  if (req.body instanceof Buffer) {
+    try {
+      req.body = JSON.parse(req.body.toString());
+    } catch (e) {
+      // If parsing fails, send a Bad Request error
+      return res.status(400).json({ msg: "Invalid JSON in request body." });
+    }
   }
   next();
 });
