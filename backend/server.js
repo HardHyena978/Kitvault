@@ -64,6 +64,15 @@ app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
 app.use("/api/admin", adminMiddleware, adminRoutes);
 app.use("/assets", express.static(path.join(__dirname, "..", "assets")));
 
+app.use((req, res, next) => {
+  // We only care about requests that should have a body.
+  if (req.method === "POST" || req.method === "PUT") {
+    console.log("--- AFTER PARSING ---");
+    console.log("PARSED BODY:", req.body);
+    console.log("---------------------");
+  }
+  next();
+});
 // --- API Routes ---
 const { Resend } = require("resend");
 const resend = new Resend(process.env.RESEND_API_KEY);
