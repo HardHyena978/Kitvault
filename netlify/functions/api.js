@@ -1,5 +1,6 @@
+// netlify/functions/api.js
 const serverless = require("serverless-http");
-// Go up one level from 'netlify/functions' and then into 'backend/server.js'
+// This now safely imports your app without starting the server
 const app = require("../../backend/server");
 
 module.exports.handler = serverless(app);

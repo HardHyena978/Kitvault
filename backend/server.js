@@ -88,6 +88,14 @@ app.post("/api/contact", async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`Server listening on port ${PORT}`);
-});
+if (require.main === module) {
+  // This block runs ONLY when you execute `node backend/server.js`
+  // It will NOT run when the file is imported by Netlify's function handler.
+  app.listen(PORT, () => {
+    console.log(`Server listening on port ${PORT}`);
+  });
+}
+
+// Export the app object.
+// This is safe because it happens in all cases.
+module.exports = app;
