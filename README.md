@@ -56,15 +56,25 @@ Follow these instructions to get a copy of the project up and running on your lo
 3.  **Setup the Database:**
 
     - Make sure your PostgreSQL server is running.
-    - Create a new database (e.g., `kitvault_db`).
-    - Connect to your new database and run the SQL commands found in a schema file (e.g., `backend/database.sql`) to create the necessary tables (`users`, `products`, `orders`, `order_items`).
+    - Create a new database named `kitvault_db`.
+    - Connect to your new database and run the SQL commands found in a schema file (e.g., `outputfile.sql`) to create the necessary tables (`users`, `products`, `orders`, `order_items`).
+      
+    - Or, copy `outputfile.sql` into `C:\Program Files\PostgreSQL\-v-\bin>`
+    - Navigate to `outputfile.sql`
+       ```bash
+       cd C:\Program Files\PostgreSQL\-v-\bin
+      ```
+     - Import `outputfile.sql` to `kitvault_db` database
+       ```bash
+       psql -h hostname -p port_number -U username -f outputfile.sql kitvault_db
+      ```
 
-4.  **Run the Application:**
+5.  **Run the Application:**
     - **Start the backend server:**
       ```bash
       npm start
       ```
-      The server will be running on `http://localhost:3000`.
+      The server typically will be running on `http://localhost:3000`.
     - **Run the Frontend:**
       - Open the root `Store` folder in VS Code.
       - Right-click on `index.html` and select "Open with Live Server".
