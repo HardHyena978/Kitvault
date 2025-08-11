@@ -1,22 +1,30 @@
-// backend/db.js
-
-// Import the 'pg' library, which is the Node.js driver for PostgreSQL
+// Corrected backend/db.js
 const { Pool } = require("pg");
 
-// Load environment variables from our .env file
-require("dotenv").config();
+// Check if we are in a production environment (like Netlify)
 const isProduction = process.env.NODE_ENV === "production";
 
-// A "Pool" is an efficient way to manage multiple client connections to the database.
-// It will automatically handle opening and closing connections.
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
+// The connection configuration object
+const connectionConfig = {
+  // Use the single DATABASE_URL if it exists (for production)
+  connectionString: process.env.DATABASE_URL,
+  // Enable SSL in production and disable it for local development
+  // Supabase requires SSL.
   ssl: isProduction ? { rejectUnauthorized: false } : false,
-});
+};
 
-// We export the pool so we can import it and use it in other files.
+// If we are NOT in production and have the individual variables, use them instead.
+// This preserves your local development setup.
+if (!isProduction) {
+  connectionConfig.user = process.env.DB_USER;
+  connectionConfig.host = process.env.DB_HOST;
+  connectionConfig.database = process.env.DB_DATABASE;
+  connectionConfig.password = process.env.DB_PASSWORD;
+  connectionConfig.port = process.env.DB_PORT;
+  // We don't need the connectionString if we have the individual parts
+  delete connectionConfig.connectionString;
+}
+
+const pool = new Pool(connectionConfig);
+
 module.exports = pool;
