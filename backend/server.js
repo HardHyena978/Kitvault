@@ -18,6 +18,26 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+const requestLogger = (req, res, next) => {
+  console.log("-----------------------------------------");
+  console.log(`[${new Date().toISOString()}] New Request Received`);
+  console.log(`METHOD: ${req.method}`);
+  console.log(`URL: ${req.originalUrl}`);
+  console.log("HEADERS:", req.headers);
+  let body = "";
+  req.on("data", (chunk) => {
+    body += chunk.toString();
+  });
+  req.on("end", () => {
+    if (body) {
+      console.log("RAW BODY:", body);
+    }
+  });
+
+  console.log("-----------------------------------------");
+  next(); // Pass the request to the next middleware
+};
+
 const allowedOrigins = [
   "https://kitvault.netlify.app", // <-- Your live Netlify URL
 ];
@@ -37,9 +57,10 @@ const corsOptions = {
   },
 };
 // --- Middleware ---
+app.use(requestLogger);
 app.use(cors(corsOptions));
-app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
+app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
 app.use("/api/admin", adminMiddleware, adminRoutes);
 app.use("/assets", express.static(path.join(__dirname, "..", "assets")));
 
