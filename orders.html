@@ -349,7 +349,7 @@
             '<p class="text-center text-slate-600">Loading your orders...</p>';
 
           try {
-            const response = await fetch("http://localhost:3001/api/orders", {
+            const response = await fetch("/api/orders", {
               headers: { Authorization: `Bearer ${token}` },
             });
 

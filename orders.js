@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 
   try {
-    const response = await fetch("http://localhost:3001/api/orders", {
+    const response = await fetch("/api/orders", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -45,7 +45,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             order.created_at
           ).toLocaleDateString()}</p>
         </div>
-        <p class="text-stone-700 mb-2">Status: <span class="font-semibold">${order.status}</span></p>
+        <p class="text-stone-700 mb-2">Status: <span class="font-semibold">${
+          order.status
+        }</span></p>
         <p class="text-xl font-bold mb-4">Total: ${(
           order.total_amount_in_cents / 100
         ).toFixed(2)}</p>
@@ -54,12 +56,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             .map(
               (item) => `
             <div class="flex items-center space-x-4">
-              <img src="${item.image_url}" alt="${item.name}" class="w-16 h-16 object-cover rounded-md">
+              <img src="${item.image_url}" alt="${
+                item.name
+              }" class="w-16 h-16 object-cover rounded-md">
               <div>
                 <p class="font-medium">${item.name}</p>
-                <p class="text-sm text-stone-600">Quantity: ${item.quantity} x ${(
-                item.price_at_purchase_in_cents / 100
-              ).toFixed(2)}</p>
+                <p class="text-sm text-stone-600">Quantity: ${
+                  item.quantity
+                } x ${(item.price_at_purchase_in_cents / 100).toFixed(2)}</p>
               </div>
             </div>
           `

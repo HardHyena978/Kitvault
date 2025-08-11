@@ -543,7 +543,7 @@
         updateCartCount();
         const newArrivalsGrid = document.getElementById("new-arrivals-grid");
 
-        fetch("http://localhost:3001/api/products")
+        fetch("/api/products")
           .then((response) => response.json())
           .then((products) => {
             if (newArrivalsGrid) {

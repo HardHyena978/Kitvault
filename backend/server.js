@@ -18,8 +18,26 @@ const path = require("path");
 const PORT = process.env.PORT || 3001;
 const app = express();
 
+const allowedOrigins = [
+  "https://kitvault.netlify.app", // <-- Your live Netlify URL
+];
+
+if (process.env.NODE_ENV !== "production") {
+  // e.g., for VS Code Live Server
+  allowedOrigins.push("http://127.0.0.1:5500");
+}
+
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+};
 // --- Middleware ---
-app.use(cors());
+app.use(cors(corsOptions));
 app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
 app.use(express.json());
 app.use("/api/admin", adminMiddleware, adminRoutes);

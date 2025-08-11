@@ -1,0 +1,16 @@
+# netlify.toml - Configuration for a project with frontend files in the root
+
+[build]
+  # This tells Netlify where your serverless backend code is located.
+  functions = "netlify/functions"
+  
+  # This tells Netlify that your static site files (index.html, etc.)
+  # are in the root of the repository.
+  publish = "."
+
+# This is the rewrite rule that directs API traffic.
+# It tells Netlify: "If a URL starts with /api/, run the 'api' function."
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/api/:splat"
+  status = 200

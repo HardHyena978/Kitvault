@@ -501,9 +501,7 @@
 
         const initializeProducts = async () => {
           try {
-            const response = await fetch(
-              "http://localhost:3001/api/products/category/current"
-            );
+            const response = await fetch("/api/products/category/current");
             allProducts = await response.json();
             renderPage();
           } catch (error) {

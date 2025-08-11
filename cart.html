@@ -510,8 +510,7 @@
             const token = localStorage.getItem("token");
             console.log("1. Token from localStorage:", token);
 
-            const requestUrl =
-              "http://localhost:3001/api/stripe/create-checkout-session";
+            const requestUrl = "/api/stripe/create-checkout-session";
             console.log("2. Sending POST request to:", requestUrl);
 
             const response = await fetch(requestUrl, {

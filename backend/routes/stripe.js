@@ -31,7 +31,7 @@ module.exports = (stripe) => {
       const lineItems = cartItems.map((item) => {
         const imageUrl = item.image_url.startsWith("http")
           ? item.image_url
-          : `http://localhost:3001${item.image_url.startsWith("/") ? "" : "/"}${item.image_url}`;
+          : `${item.image_url.startsWith("/") ? "" : "/"}${item.image_url}`;
 
         return {
           price_data: {
@@ -55,8 +55,8 @@ module.exports = (stripe) => {
         line_items: lineItems,
         mode: "payment",
         metadata: { db_order_id: orderId, db_user_id: req.user.id },
-        success_url: `http://127.0.0.1:5500/success.html`,
-        cancel_url: `http://127.0.0.1:5500/cancel.html`,
+        success_url: `${process.env.FRONTEND_URL}/success.html`,
+        cancel_url: `${process.env.FRONTEND_URL}/cancel.html`,
         shipping_address_collection: {
           allowed_countries: ["US", "CA", "GB", "AU"],
         },
