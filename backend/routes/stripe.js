@@ -79,7 +79,6 @@ module.exports = (stripe) => {
   // This handles events sent from Stripe *after* a payment is completed.
   router.post(
     "/webhook",
-    express.raw({ type: "application/json" }),
     async (req, res) => {
       const sig = req.headers["stripe-signature"];
       let event;

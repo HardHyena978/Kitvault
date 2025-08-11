@@ -39,8 +39,13 @@ const corsOptions = {
 // --- Middleware ---
 
 app.use(cors(corsOptions));
-app.use(express.json());
+
+// Stripe webhook needs the raw body, so we apply this middleware first.
 app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
+
+// All other routes can use the JSON parser.
+app.use(express.json());
+
 app.use("/api/admin", adminMiddleware, adminRoutes);
 app.use("/assets", express.static(path.join(__dirname, "..", "assets")));
 
