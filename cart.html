@@ -510,7 +510,8 @@
             const token = localStorage.getItem("token");
             console.log("1. Token from localStorage:", token);
 
-            const requestUrl = "/api/stripe/create-checkout-session";
+            const requestUrl =
+              "https://kitvault.netlify.app/api/stripe/create-checkout-session";
             console.log("2. Sending POST request to:", requestUrl);
 
             const response = await fetch(requestUrl, {

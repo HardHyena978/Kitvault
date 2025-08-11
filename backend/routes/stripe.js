@@ -55,8 +55,9 @@ module.exports = (stripe) => {
         line_items: lineItems,
         mode: "payment",
         metadata: { db_order_id: orderId, db_user_id: req.user.id },
-        success_url: `${process.env.FRONTEND_URL}/success.html`,
-        cancel_url: `${process.env.FRONTEND_URL}/cancel.html`,
+        success_url: `https://kitvault.netlify.app/success.html`,
+
+        cancel_url: `https://kitvault.netlify.app/cancel.html`,
         shipping_address_collection: {
           allowed_countries: ["US", "CA", "GB", "AU"],
         },
