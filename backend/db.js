@@ -1,30 +1,27 @@
-// Corrected backend/db.js
 const { Pool } = require("pg");
 
-// Check if we are in a production environment (like Netlify)
-const isProduction = process.env.NODE_ENV === "production";
+let pool;
 
-// The connection configuration object
-const connectionConfig = {
-  // Use the single DATABASE_URL if it exists (for production)
-  connectionString: process.env.DATABASE_URL,
-  // Enable SSL in production and disable it for local development
-  // Supabase requires SSL.
-  ssl: isProduction ? { rejectUnauthorized: false } : false,
-};
-
-// If we are NOT in production and have the individual variables, use them instead.
-// This preserves your local development setup.
-if (!isProduction) {
-  connectionConfig.user = process.env.DB_USER;
-  connectionConfig.host = process.env.DB_HOST;
-  connectionConfig.database = process.env.DB_DATABASE;
-  connectionConfig.password = process.env.DB_PASSWORD;
-  connectionConfig.port = process.env.DB_PORT;
-  // We don't need the connectionString if we have the individual parts
-  delete connectionConfig.connectionString;
+// Heroku, Vercel, Netlify, Supabase, Render, etc., all use DATABASE_URL.
+// This is the standard for production environments.
+if (process.env.DATABASE_URL) {
+  // Production environment
+  pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: {
+      rejectUnauthorized: false,
+    },
+  });
+} else {
+  // Local development environment
+  // It will use the variables from your local .env file
+  pool = new Pool({
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_DATABASE,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
+  });
 }
-
-const pool = new Pool(connectionConfig);
 
 module.exports = pool;
