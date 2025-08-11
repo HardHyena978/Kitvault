@@ -1,5 +1,21 @@
 {
+  "name": "kitvault-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
   "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "pg": "^8.16.3",
+    "resend": "^4.8.0",
+    "serverless-http": "^3.2.0",
+    "stripe": "^18.3.0",
     "@tailwindcss/cli": "^4.1.11",
     "tailwindcss": "^4.1.11"
   }
