@@ -36,9 +36,14 @@ const corsOptions = {
     }
   },
 };
-// --- Middleware ---
 
+// --- Middleware ---
 app.use(cors(corsOptions));
+
+// The Stripe webhook route needs the raw request body, so we must register
+// the Stripe routes *before* the global express.json() middleware.
+app.use("/api/stripe", stripeRoutes);
+
 app.use(express.json());
 app.use("/api/admin", adminMiddleware, adminRoutes);
 app.use("/assets", express.static(path.join(__dirname, "..", "assets")));
@@ -50,7 +55,6 @@ app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/profile", profileRoutes);
-app.use("/api/stripe", stripeRoutes);
 
 app.post("/api/contact", async (req, res) => {
   const { name, email, message } = req.body;
