@@ -11,6 +11,10 @@ router.post("/register", async (req, res) => {
   try {
     const { name, email, password } = req.body;
 
+    if (!name || !email || !password) {
+      return res.status(400).json({ msg: "Please enter all fields." });
+    }
+
     // 1. Check if user already exists
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
       email,
@@ -47,6 +51,10 @@ router.post("/register", async (req, res) => {
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ msg: "Please enter all fields." });
+    }
 
     // 1. Check if user exists
     const user = await pool.query("SELECT * FROM users WHERE email = $1", [
