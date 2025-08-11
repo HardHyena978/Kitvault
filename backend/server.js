@@ -44,12 +44,17 @@ app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
 app.use("/api/admin", adminMiddleware, adminRoutes);
 app.use("/assets", express.static(path.join(__dirname, "..", "assets")));
 
+// This middleware checks if the body was parsed as a Buffer and, if so,
+// manually converts it into a proper JSON object.
 app.use((req, res, next) => {
-  if (req.body instanceof Buffer) {
+  // --- THIS IS THE FIX ---
+  // We only attempt to parse the buffer if it is not empty.
+  // GET requests will have an empty buffer, so they will be skipped.
+  // POST requests with a body will have a non-empty buffer and will be parsed.
+  if (req.body instanceof Buffer && req.body.length > 0) {
     try {
       req.body = JSON.parse(req.body.toString());
     } catch (e) {
-      // If parsing fails, send a Bad Request error
       return res.status(400).json({ msg: "Invalid JSON in request body." });
     }
   }
