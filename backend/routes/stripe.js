@@ -29,7 +29,7 @@ module.exports = (stripe) => {
 
       // 2. Format the cart items for Stripe's API.
       const lineItems = cartItems.map((item) => {
-        const imageUrl = "https://kitvault.netlify.app/" + item.image_url;
+        const imageUrl = "https://kitvault.netlify.app" + item.image_url;
 
         return {
           price_data: {
