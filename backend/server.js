@@ -37,7 +37,7 @@ const corsOptions = {
   },
 };
 // --- Middleware ---
-
+app.use("/api/stripe", stripeRoutes);
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use("/api/stripe/webhook", express.raw({ type: "application/json" }));
@@ -67,7 +67,6 @@ app.use("/api/products", productRoutes);
 app.use("/api/auth", authRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/profile", profileRoutes);
-app.use("/api/stripe", stripeRoutes);
 
 app.post("/api/contact", async (req, res) => {
   const { name, email, message } = req.body;
